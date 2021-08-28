@@ -1,0 +1,256 @@
+" vim: set ft=vim:
+let python_highlight_all=1
+syntax on
+set nu
+
+set hlsearch
+set incsearch
+
+" https://thoughtbot.com/blog/vim-splits-move-faster-and-more-naturally#more-natural-split-opening
+set splitbelow
+set splitright
+
+set nocompatible              " required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+
+" add all your plugins here (note older versions of Vundle
+" used Bundle instead of Plugin)
+
+Plugin 'alker0/chezmoi.vim'
+Plugin 'Lilja/vim-chezmoi'
+Plugin 'tmhedberg/SimpylFold'
+Plugin 'vim-scripts/indentpython.vim'
+Plugin 'vim-syntastic/syntastic'
+"Plugin 'nvie/vim-flake8'
+Plugin 'psf/black'
+Plugin 'jnurmine/Zenburn'
+Plugin 'rakr/vim-one'
+Plugin 'arcticicestudio/nord-vim'
+Plugin 'ayu-theme/ayu-vim'
+Plugin 'dracula/vim', { 'name': 'dracula' }
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'scrooloose/nerdtree'
+Plugin 'kien/ctrlp.vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-git'
+Plugin 'tpope/vim-commentary'
+Plugin 'mhinz/vim-signify'
+Plugin 'leafgarland/typescript-vim'
+Plugin 'rust-lang/rust.vim'
+Plugin 'stephpy/vim-yaml'
+Plugin 'cespare/vim-toml'
+Plugin 'hashivim/vim-terraform'
+Plugin 'kana/vim-fakeclip'
+Plugin 'itchyny/lightline.vim'
+Plugin 'psliwka/vim-smoothie'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+" Gtags - https://www.gnu.org/software/global/globaldoc_toc.html#Vim-editor
+"map <C-n> :cn<CR>
+"map <C-p> :cp<CR>
+"map <C-\>^] :GtagsCursor<CR>
+
+"
+" Config for Vundle plugins must be below here!
+"
+
+" Black config - use a default virtualenv (from pyenv-virtualenv)
+let g:black_virtualenv = "~/.pyenv/versions/3.9.6/envs/default"
+
+" Nerdtree config
+map <C-n> :NERDTreeToggle<CR>
+" Close vim if NERDTree is all that is open
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" Ignore files in NERDTree
+let NERDTreeIgnore=['\.pyc$', '\~$']
+
+" Syntastic config - https://github.com/vim-syntastic/syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 1
+
+" lightline config
+set laststatus=2
+set noshowmode
+let g:lightline = {
+      \ 'colorscheme': 'one',
+      \ }
+
+" default updatetime 4000ms is not good for async update
+set updatetime=100
+
+" Keep 3 lines above/below cursor at all times
+set scrolloff=3
+
+" vim-smoothie scrolling smoother
+let g:smoothie_speed_constant_factor=30
+let g:smoothie_speed_linear_factor=30
+
+" Show numbers relative to cursor
+set relativenumber
+
+" 
+" Color scheme settings
+" 
+"
+" set t_Co=256
+
+" Swap solarized dark/light with F5
+call togglebg#map("<F5>")
+
+set background=dark
+let g:solarized_termcolors=256
+let g:one_allow_italics=1
+let ayucolor="dark"
+
+"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
+"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
+if (has("nvim"))
+  "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+endif
+"For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+"Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+" < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+if (has("termguicolors"))
+  set termguicolors
+  " https://stackoverflow.com/a/62703167/992456
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+endif
+
+" Set the colorscheme. After theme settings, before highlight bg setting
+"colorscheme one
+colorscheme ayu
+"colorscheme nord
+
+" Transparent background - this must be after other color settings!
+highlight Normal guibg=NONE ctermbg=NONE
+
+"
+" Leader commands
+"
+
+" Remap leader to \
+let mapleader = "\\"
+
+" Leader macros to highlight lines/columns
+" <Leader>c makes your cursor a crosshair
+highlight CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+highlight CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
+" <Leader>L permenantly highlights the current line
+nnoremap <silent> <Leader>L ml:execute 'match Search /\%'.line('.').'l/'<CR>
+
+" Clean up XML with <Leader>t
+nnoremap <leader>t :%!tidy -q -xml -i -raw<cr>
+
+" Hide current hlsearch results with <Leader>\
+nnoremap <leader>\ :noh<cr>
+
+" Set nice listchars, and toggle with <Leader>l
+set listchars=tab:→\ ,eol:↲,nbsp:␣,trail:•,extends:⟩,precedes:⟨
+nnoremap <leader>l :set list!<cr>
+
+" Clear search with \\
+map <leader>\ :let @/ = ""<cr>
+
+" Cargo / rust leader commands
+let g:cargo_makeprg_params = "build"
+map <leader>cb :Cargo build<cr>
+map <leader>cc :Cargo check<cr>
+map <leader>cr :Cargo run<cr>
+map <leader>ct :Cargo test<cr>
+
+map <leader>cf :RustFmt<cr>
+
+" Enable folding
+set foldmethod=indent
+set foldlevel=99
+
+" Enable folding with the spacebar
+nnoremap <space> za
+let g:SimpylFold_docstring_preview=1
+
+
+" Misc settings
+set expandtab
+
+" Allow backspace beyond what Vim thinks is proper
+" https://vi.stackexchange.com/a/2163
+set backspace=indent,eol,start
+
+" Python specific configuration
+au BufNewFile,BufRead *.py
+    \ set tabstop=4 |
+    \ set softtabstop=4 |
+    \ set shiftwidth=4 |
+    \ set textwidth=100 |
+    \ set expandtab |
+    \ set autoindent |
+    \ set fileformat=unix
+
+" Misc HTML formats
+au BufNewFile,BufRead *.js, *.html, *.css
+    \ set tabstop=2 |
+    \ set softtabstop=2 |
+    \ set shiftwidth=2
+
+" Rust specific configuration
+au BufNewFile,BufRead *.rs
+    \ let g:rustfmt_autosave = 1
+
+" Custom settings for gopass editing, to prevent leaking plaintext
+{{ if (eq .chezmoi.os "linux") -}}
+au BufNewFile,BufRead /dev/shm/gopass.*
+    \ setlocal noswapfile nobackup noundofile
+{{ else if (eq .chezmoi.os "darwin" ) }}
+au BufNewFile,BufRead /private/**/gopass**
+    \ setlocal noswapfile nobackup noundofile
+{{ end }}
+" Flag unnecessary whitepsace
+highlight BadWhitespace ctermbg=red guibg=darkred
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+
+" YouCompleteMe config
+let g:ycm_autoclose_preview_window_after_completion=1
+map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+" "python with virtualenv support
+" py << EOF
+" import os
+" import sys
+" if 'VIRTUAL_ENV' in os.environ:
+"   project_base_dir = os.environ['VIRTUAL_ENV']
+"   activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+"   execfile(activate_this, dict(__file__=activate_this))
+" EOF
+
+" set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣
+set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:·
+map <leader>l  :set list!<CR>
+
+" Automatically apply changes when saving a chezmoi managed file (Lilja/vim-chezmoi)
+let g:chezmoi = "enabled"
+
+" vim-fugitive git browse commands
+nnoremap  <silent>dv               :.GBrowse  master:%<CR>
+nnoremap  <silent>dy               :.GBrowse! master:%<CR>

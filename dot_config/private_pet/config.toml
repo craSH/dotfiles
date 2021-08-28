@@ -1,0 +1,13 @@
+[General]
+  snippetfile = "/home/crash/.config/pet/snippet.toml"
+  editor = "/usr/bin/vim"
+  column = 40
+  selectcmd = "fzf"
+  backend = "gist"
+  sortby = ""
+
+[Gist]
+  file_name = "pet-snippet.toml"
+  gist_id = "3b192e749efd9aaf9479bde4f65f13d6"
+  public = true
+  auto_sync = false

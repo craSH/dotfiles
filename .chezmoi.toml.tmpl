@@ -1,0 +1,20 @@
+{{- $email := promptString "What is your email" -}}
+{{- $gpg_fingerprint := promptString "What is your GPG key fingerprint" -}}
+{{- $personal_machine := promptString "Is this a Personal machine? (true/false)" -}}
+{{- $work_machine := promptString "Is this a Work machine? (true/false)" -}}
+[data]
+    name = "Ian Gallagher"
+    username_work = "igallagher"
+    username_personal = "crash"
+    email = {{ $email | quote }}
+    gpg_fingerprint = {{ $gpg_fingerprint | nospace | quote }}
+    personal_machine = {{ $personal_machine }}
+    work_machine = {{ $work_machine }}
+
+[diff]
+    pager = "diff-so-fancy"
+
+[gpg]
+    recipient = {{ $gpg_fingerprint | nospace | quote }}
+
+encryption = "gpg"

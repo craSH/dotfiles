@@ -1,0 +1,4 @@
+#!/bin/sh
+if ! /usr/bin/pinentry-bemenu --bottom --line-height=375 ; then
+        exit 1
+fi

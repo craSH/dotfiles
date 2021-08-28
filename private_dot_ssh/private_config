@@ -1,0 +1,15 @@
+# vim: set filetype=sshconfig:
+# Always order configs from most-specific to least specific since the first
+# value found for a setting is used.
+#
+# Keep this in mind when including config files - the order is derrived from
+# the ~/.ssh/config file's include ordering
+#
+# If you set different options in different blocks, the above statement may not
+# appear to hold true - use ssh -vv to determine where settings are being
+# applied from, when needed.
+#
+# Run `man ssh_config` for more explanation of the settings.
+
+# Include configuration from split out configuration files
+Include config-*

@@ -1,0 +1,82 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# The following lines were added by compinstall
+
+zstyle ':completion:*' completer _expand _complete _ignored _approximate
+zstyle ':completion:*' max-errors 1
+zstyle :compinstall filename '/home/crash/.zshrc'
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+
+# the detailed meaning of the below three variable can be found in `man zshparam`.
+export HISTFILE=~/.histfile
+export HISTSIZE=1000000   # the number of items for the internal history list
+export SAVEHIST=1000000   # maximum number of items for the history file
+
+# The meaning of these options can be found in man page of `zshoptions`.
+setopt HIST_IGNORE_ALL_DUPS  # do not put duplicated command into history list
+setopt HIST_SAVE_NO_DUPS  # do not save duplicated command
+setopt HIST_REDUCE_BLANKS  # remove unnecessary blanks
+setopt INC_APPEND_HISTORY_TIME  # append command to history file immediately after execution
+setopt EXTENDED_HISTORY  # record command start time
+
+unsetopt autocd beep
+bindkey -v
+
+bindkey "^R" history-incremental-pattern-search-backward
+
+# Start of Powerline10k config
+source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ -r ~/.p10k.zsh ]] && source ~/.p10k.zsh
+# End of Powerline10k config
+
+# Load any custom environment variables, including secure ones
+[[ -r ${HOME}/.env ]] && source ${HOME}/.env
+[[ -r ${HOME}/.env-secure ]] && source ${HOME}/.env-secure
+
+# Path
+export PATH=$HOME/bin:$PATH
+export PATH=$HOME/.local/bin:$PATH
+export PATH=$HOME/go/bin:$PATH
+
+# Custom functions
+fpath=($HOME/.zfunctions $fpath)
+
+# Ripgrep config
+export RIPGREP_CONFIG_PATH=$HOME/.config/ripgreprc
+
+# 1Password completion
+command -v op >/dev/null 2>&1 && eval "$(op completion zsh)" && compdef _op op
+
+# gopass completion
+command -v gopass >/dev/null 2>&1 && eval `gopass completion zsh`
+
+# GPG Agent (Also for ssh-agent provided by GPG)
+[[ -r ${HOME}/.gnupg/shell-config.sh ]] && source ${HOME}/.gnupg/shell-config.sh
+
+# Wayland
+export XDG_SESSION_TYPE=wayland 
+export GDK_BACKEND=wayland
+
+# pyenv
+eval "$(pyenv init - && pyenv init --path && pyenv virtualenv-init -)"
+
+# fzf integration
+[[ -r /usr/share/fzf/key-bindings.zsh ]] && source /usr/share/fzf/key-bindings.zsh
+[[ -r /usr/share/fzf/completion.zsh ]] && source /usr/share/fzf/completion.zsh
+[[ -r ${HOME}/.config/fzf/fzf.sh ]] && source ${HOME}/.config/fzf/fzf.sh
+
+# Pet
+[[ -r ${HOME}/.config/pet/pet.zsh ]] && source ${HOME}/.config/pet/pet.zsh
+
+# Custom aliases
+alias ls='ls --color=auto'

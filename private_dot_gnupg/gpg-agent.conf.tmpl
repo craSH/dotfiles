@@ -1,0 +1,11 @@
+enable-ssh-support
+allow-loopback-pinentry
+pinentry-program {{ .chezmoi.homeDir }}/.gnupg/.pinentry
+
+# Set the default cache time to 8 hours.
+default-cache-ttl       28800
+default-cache-ttl-ssh   28800
+
+# Set the max cache time to 1 day.
+max-cache-ttl           86400
+max-cache-ttl-ssh       86400

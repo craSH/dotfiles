@@ -1,0 +1,5 @@
+# Use VIM in read-only mode as the man page viewer
+export MANPAGER="vim -R -c MANPAGER"
+
+# ranger file manager settings
+export RANGER_LOAD_DEFAULT_RC=FALSE
