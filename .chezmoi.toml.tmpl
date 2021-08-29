@@ -1,7 +1,15 @@
-{{- $email := promptString "What is your email" -}}
-{{- $gpg_fingerprint := promptString "What is your GPG key fingerprint" -}}
-{{- $personal_machine := promptString "Is this a Personal machine? (true/false)" -}}
-{{- $work_machine := promptString "Is this a Work machine? (true/false)" -}}
+{{- $email := get . "email" -}}{{- if not $email -}}
+{{-     $email := promptString "What is your email" -}}
+{{- end -}}
+{{- $gpg_fingerprint := get . "gpg_fingerprint" -}}{{- if not $gpg_fingerprint -}}
+{{-     $gpg_fingerprint := promptString "What is your GPG key fingerprint" -}}
+{{- end -}}
+{{- $personal_machine := get . "personal_machine" -}}{{- if not $personal_machine -}}
+{{-     $personal_machine := promptString "Is this a Personal machine? (true/false)" -}}
+{{- end -}}
+{{- $work_machine := get . "work_machine" -}}{{- if not $work_machine -}}
+{{-     $work_machine := promptString "Is this a Work machine? (true/false)" -}}
+{{- end -}}
 [data]
     name = "Ian Gallagher"
     username_work = "igallagher"
