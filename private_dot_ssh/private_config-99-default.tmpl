@@ -16,7 +16,8 @@ Host *
         Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
         VisualHostKey yes
         HashKnownHosts yes
-        VerifyHostKeyDNS ask
+        # Only use this for hosts/zones that we know have it set, otherwise timeouts are annoying and essentially guaranteed
+        VerifyHostKeyDNS no
         ServerAliveInterval 5
         ServerAliveCountMax 3
         AddressFamily inet
