@@ -129,7 +129,7 @@ font pango:LiterationSans Nerd Font 16px
     bindsym $mod+$alt+l exec "swaylock --grace 0 --fade-in 0"
     
     # Screenshot
-    bindsym $mod+Shift+p exec ~/bin/slurpshot
+    bindsym $mod+Shift+p exec ~/.local/bin/slurpshot
     
     # Display Brightness up/down (Small steps)
     bindsym --locked XF86MonBrightnessUp exec "sudo /usr/bin/xbacklight -inc 5"
