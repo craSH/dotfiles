@@ -80,3 +80,4 @@ eval "$(pyenv init - && pyenv init --path && pyenv virtualenv-init -)"
 
 # Custom aliases
 alias ls='ls --color=auto'
+alias grep='grep --color=auto'
