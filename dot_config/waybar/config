@@ -77,8 +77,7 @@
         "format-icons": {
             "activated": "",
             "deactivated": ""
-        },
-        "on-update": "/tmp/k.sh"
+        }
     },
     "tray": {
         // "icon-size": 21,
@@ -114,7 +113,7 @@
         "states": {
             // "good": 95,
             "warning": 30,
-            "critical": 15
+            "critical": 10
         },
         "format": "{capacity}% {icon}",
         "format-charging": "{capacity}% ",
