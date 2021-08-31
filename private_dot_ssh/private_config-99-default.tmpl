@@ -25,7 +25,7 @@ Host *
         # unexpected ways, but yield a substantial speed up when you
         # repeatedly login to remote machines.  If you enable them, make sure
         # you read the man pages and understand the consequences.
-        ControlPath /tmp/.ssh-%u@%n:%p
+        ControlPath /tmp/.ssh-%C
         ControlMaster auto
         ControlPersist 60
         #TCPKeepAlive yes # Disabled because it will kill connections if a route is down even temporarily
