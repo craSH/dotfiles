@@ -1,14 +1,14 @@
 {{- $email := get . "email" -}}{{- if not $email -}}
-{{-     $email := promptString "What is your email" -}}
+{{-     $email = promptString "What is your email" -}}
 {{- end -}}
 {{- $gpg_fingerprint := get . "gpg_fingerprint" -}}{{- if not $gpg_fingerprint -}}
-{{-     $gpg_fingerprint := promptString "What is your GPG key fingerprint" -}}
+{{-     $gpg_fingerprint = promptString "What is your GPG key fingerprint" -}}
 {{- end -}}
 {{- $personal_machine := get . "personal_machine" -}}{{- if not $personal_machine -}}
-{{-     $personal_machine := promptString "Is this a Personal machine? (true/false)" -}}
+{{-     $personal_machine = promptBool "Is this a Personal machine (yes/no)" -}}
 {{- end -}}
 {{- $work_machine := get . "work_machine" -}}{{- if not $work_machine -}}
-{{-     $work_machine := promptString "Is this a Work machine? (true/false)" -}}
+{{-     $work_machine = promptBool "Is this a Work machine (yes/no)" -}}
 {{- end -}}
 [data]
     name = "Ian Gallagher"
