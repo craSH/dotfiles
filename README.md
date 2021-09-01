@@ -8,7 +8,7 @@ My personal dotfiles managed using [chezmoi](https://github.com/twpayne/chezmoi)
 2) Install dotfiles:
 
     ```console
-    chezmoi init --apply https://github.com/gazorby/dotfiles.git
+    chezmoi init --apply https://github.com/crash/dotfiles.git
     ```
 
 ## 🔩 Dependencies and pre-requirements
