@@ -1,15 +1,16 @@
 [init]
         defaultBranch = main
-
 [user]
         name = "{{ .name }}"
         email = "{{ .email }}"
         signingkey = "{{ .gpg_fingerprint }}"
-
 [commit]
         gpgsign = true
+	verbose = true
+	template = ~/.gitcommittemplate
 [core]
         pager = diff-so-fancy | less --tabs=4 -RFX
+	commitGraph = true
 [interactive]
         diffFilter = diff-so-fancy --patch
 [color]
@@ -27,3 +28,25 @@
         old = red bold
         new = green bold
         whitespace = red reverse
+[log]
+	date = relative
+[merge]
+	renamelimit = 2048
+[gc]
+	writeCommitGraph = true
+[fetch]
+	writeCommitGraph = true
+[checkout]
+	defaultRemote = origin
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[alias]
+	unstage = reset --
+	l = log --date=iso --pretty='format:%C(Yellow)%h  %C(reset)%ad (%C(Green)%cr%C(reset)) %C(Cyan)%an: %C(reset)%s'
+	lg = log --date=iso --graph --pretty='format:%C(Yellow)%h  %C(reset)%ad (%C(Green)%cr%C(reset)) %C(Cyan)%an: %C(reset)%s'
+	lol = log --graph --pretty='format:%Cred%h%Creset%C(yellow)%d%Creset %s%Cgreen (%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	#lg = log --pretty='format:%C(auto,yellow)%h%C(auto,magenta)% G? %C(auto,blue)%>(12,trunc)%ad %C(auto,green)%<(14,trunc)%aN%C(auto,reset)%s%C(auto,red)% gD% D'
+	#lol = log --graph --pretty=oneline --abbrev-commit --decorate=short
