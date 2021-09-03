@@ -1,5 +1,8 @@
-# Use VIM in read-only mode as the man page viewer
-export MANPAGER="vim -R -c MANPAGER"
+# Default editor
+export EDITOR="/usr/bin/vim"
+
+# Default pager (MANPAGER will use this unless set, too)
+export PAGER="/usr/bin/bat --style=plain"
 
 # ranger file manager settings
 export RANGER_LOAD_DEFAULT_RC=FALSE
