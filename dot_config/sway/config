@@ -38,17 +38,16 @@ output * bg ~/Documents/backgrounds/3840x2160-sand-dune-night.jpg fill
 #
 # Example configuration:
 #
-exec swayidle -w \
-         # Aggressive gpg-agent security can be achieved with the following instead of just `swaylock` (in all occurences)
-         # timeout 300 'sh -c "source ${HOME}/.gnupg/shell-config.sh && resetcard >/dev/null; swaylock"' \
-         timeout 300 'swaylock' \
-         timeout 360 'swaymsg "output * dpms off"' \
-         resume 'swaymsg "output * dpms on" ; gpg-connect-agent updatestartuptty /bye > /dev/null' \
-         before-sleep 'swaylock --grace 0 --fade-in 0'
-#
 # This will lock your screen after 300 seconds of inactivity, then turn off
-# your displays after another 300 seconds, and turn your screens back on when
+# your displays after another 60 seconds, and turn your screens back on when
 # resumed. It will also lock your screen before your computer goes to sleep.
+#
+# Aggressive gpg-agent security can be achieved with the following instead of just `swaylock` (in all occurences)
+# timeout 300 'sh -c "source ${HOME}/.gnupg/shell-config.sh && resetcard >/dev/null; swaylock"' \
+exec swayidle -w \
+         timeout 300 'swaylock' \
+         timeout 360 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+         before-sleep 'swaylock --grace 0 --fade-in 0'
 
 ### Input configuration
 
