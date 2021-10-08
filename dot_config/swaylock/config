@@ -1,5 +1,6 @@
 screenshots
 clock
+daemonize
 datestr=%a, %Y-%m-%d
 timestr=%T
 indicator
