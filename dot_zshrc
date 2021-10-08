@@ -82,3 +82,4 @@ eval "$(pyenv init - && pyenv init --path && pyenv virtualenv-init -)"
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias files='fd -uu -g --type=file ""'
+alias terraforming='docker run --rm --name terraforming --volume=${HOME}/.aws:/root/.aws:ro quay.io/dtan4/terraforming:latest terraforming'
