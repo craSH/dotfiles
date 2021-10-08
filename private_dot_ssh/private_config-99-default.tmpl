@@ -28,7 +28,7 @@ Host *
         ControlPath /tmp/.ssh-%C
         ControlMaster auto
         ControlPersist 60
-        #TCPKeepAlive yes # Disabled because it will kill connections if a route is down even temporarily
+        TCPKeepAlive no # Disabled because it will kill connections if a route is down even temporarily
         Compression no
         ForwardX11 no
         GSSAPIAuthentication no
