@@ -6,3 +6,6 @@ export PAGER="/usr/bin/bat --style=plain"
 
 # ranger file manager settings
 export RANGER_LOAD_DEFAULT_RC=FALSE
+
+# Java fix for Sway (https://wiki.archlinux.org/title/Java#Gray_window,_applications_not_resizing_with_WM,_menus_immediately_closing)
+export _JAVA_AWT_WM_NONREPARENTING=1

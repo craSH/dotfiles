@@ -1,0 +1,15 @@
+#!/bin/bash
+# Wrapper to fix squirrel on Sway
+
+# Store the current window manager name
+old_wmname=$(wmname)
+
+# Spoof the window manager name to be compiz
+wmname compiz
+
+# Start squirrel
+/usr/bin/squirrel-sql &
+
+# Change the window manager name back to what it was
+sleep 10
+wmname "$old_wmname"
