@@ -1,4 +1,4 @@
 #!/bin/sh
-export PET_GITHUB_ACCESS_TOKEN="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"
+export PET_GITHUB_ACCESS_TOKEN={{ gopass "_dotfiles/github/personal_access_token/pet" | quote }}
 
 /usr/bin/pet "$@"
