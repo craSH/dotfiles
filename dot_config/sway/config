@@ -127,10 +127,10 @@ font pango:LiterationSans Nerd Font 16px
     # Aggressive gpg-agent security can be achieved with the following instead of just `swaylock` (in all occurences)
     # bindsym $mod+$alt+l exec "sh -c 'source ${HOME}/.gnupg/shell-config.sh && resetcard >/dev/null; swaylock --grace 0 --fade-in 0; gpg-connect-agent updatestartuptty /bye > /dev/null'"
     bindsym $mod+$alt+l exec "swaylock --grace 0 --fade-in 0"
-    
+
     # Screenshot
     bindsym $mod+Shift+p exec ~/.local/bin/slurpshot
-    
+
     # Display Brightness up/down (Small steps)
     bindsym --locked XF86MonBrightnessUp exec "sudo /usr/bin/xbacklight -inc 5"
     bindsym --locked XF86MonBrightnessDown exec "sudo /usr/bin/xbacklight -dec 5"

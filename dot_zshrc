@@ -64,7 +64,7 @@ command -v gopass >/dev/null 2>&1 && eval `gopass completion zsh`
 [[ -r ${HOME}/.gnupg/shell-config.sh ]] && source ${HOME}/.gnupg/shell-config.sh
 
 # Wayland
-export XDG_SESSION_TYPE=wayland 
+export XDG_SESSION_TYPE=wayland
 export GDK_BACKEND=wayland
 
 # pyenv

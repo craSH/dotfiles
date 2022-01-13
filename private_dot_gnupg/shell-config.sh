@@ -9,4 +9,3 @@ resetcard() {
   gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1
   gpg --card-status
 }
-
