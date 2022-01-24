@@ -189,6 +189,13 @@ map <leader>cf :RustFmt<cr>
 set foldmethod=indent
 set foldlevel=99
 
+" Enable concealing markup characters such as Markdown bold/italic
+set conceallevel=2
+
+" vim-markdown options
+let g:vim_markdown_auto_insert_bullets = 0
+let g:vim_markdown_new_list_item_indent = 0
+
 " Enable folding with the spacebar
 nnoremap <space> za
 let g:SimpylFold_docstring_preview=1
