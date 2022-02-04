@@ -34,7 +34,11 @@ bindkey -v
 bindkey "^R" history-incremental-pattern-search-backward
 
 # Start of Powerline10k config
+{{  if eq .chezmoi.os "linux" -}}
 source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+{{ else if eq .chezmoi.os "darwin" -}}
+source $(brew --prefix)/opt/powerlevel10k/powerlevel10k.zsh-theme
+{{- end }}
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ -r ~/.p10k.zsh ]] && source ~/.p10k.zsh

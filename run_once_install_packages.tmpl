@@ -1,6 +1,6 @@
 {{- /* vim set filetype=sh: */ -}}
-{{- $common_packages := "gnupg gopass ripgrep jq fzf pyenv" -}}
-{{- $macos_brew_packages := "pinentry-mac" -}}
+{{- $common_packages := "gnupg gopass ripgrep jq fzf pyenv pyenv-virtualenv" -}}
+{{- $macos_brew_packages := "pinentry-mac romkatv/powerlevel10k/powerlevel10k" -}}
 {{- $debian_apt_packages := "" -}}
 {{-  if eq .chezmoi.os "linux" -}}
 #!/bin/bash
