@@ -1,6 +1,10 @@
 enable-ssh-support
 allow-loopback-pinentry
+{{  if eq .chezmoi.os "linux" -}}
 pinentry-program {{ .chezmoi.homeDir }}/.gnupg/.pinentry
+{{- else if eq .chezmoi.os "darwin" -}}
+pinentry-program /usr/local/bin/pinentry-mac
+{{- end }}
 
 # Set the default cache time to 8 hours.
 default-cache-ttl       28800
