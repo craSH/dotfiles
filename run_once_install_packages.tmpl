@@ -1,0 +1,31 @@
+{{- /* vim set filetype=sh: */ -}}
+{{- $common_packages := "gnupg gopass ripgrep jq fzf pyenv" -}}
+{{- $macos_brew_packages := "pinentry-mac" -}}
+{{- $debian_apt_packages := "" -}}
+{{-  if eq .chezmoi.os "linux" -}}
+#!/bin/bash
+{{  if $common_packages -}}
+# Install common packages
+apt-get install {{ $common_packages }}
+{{-  end }}
+
+{{   if $debian_apt_packages -}}
+# Install debian/ubuntu specific packages
+apt-get install {{ $debian_apt_packages }}
+{{-  end -}}
+
+{{- else if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+# Install Homebrew if not present
+if ! command -v brew ; then
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+{{   if $common_packages }}
+# Install common packages
+brew install {{ $common_packages }}
+{{-  end }}
+{{   if $macos_brew_packages }}
+# Install macOS brew specific packages
+brew install {{ $macos_brew_packages -}}
+{{-  end -}}
+{{- end }}
