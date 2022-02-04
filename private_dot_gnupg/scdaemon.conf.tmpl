@@ -1,0 +1,8 @@
+{{- if eq .chezmoi.os "linux" -}}
+pcsc-driver /usr/lib/libpcsclite.so
+{{- else if eq .chezmoi.os "darwin" -}}
+reader-port "Yubico YubiKey OTP+FIDO+CCID"
+{{- end -}}
+card-timeout 5
+disable-ccid
+pcsc-shared
