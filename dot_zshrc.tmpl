@@ -34,7 +34,7 @@ bindkey -v
 bindkey "^R" history-incremental-pattern-search-backward
 
 # Start of Powerline10k config
-{{  if eq .chezmoi.os "linux" -}}
+{{ if eq .chezmoi.os "linux" -}}
 source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 {{ else if eq .chezmoi.os "darwin" -}}
 source $(brew --prefix)/opt/powerlevel10k/powerlevel10k.zsh-theme
@@ -83,7 +83,11 @@ eval "$(pyenv init - && pyenv init --path && pyenv virtualenv-init -)"
 [[ -r ${HOME}/.config/pet/pet.zsh ]] && source ${HOME}/.config/pet/pet.zsh
 
 # Custom aliases
+{{- if eq .chezmoi.os "linux" }}
 alias ls='ls --color=auto'
+{{ else if eq .chezmoi.os "darwin" }}
+alias ls='ls -Gfh'
+{{- end }}
 alias grep='grep --color=auto'
 alias files='fd -uu -g --type=file ""'
 alias terraforming='docker run --rm --name terraforming --volume=${HOME}/.aws:/root/.aws:ro quay.io/dtan4/terraforming:latest terraforming'
