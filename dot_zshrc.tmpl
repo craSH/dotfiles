@@ -86,7 +86,7 @@ eval "$(pyenv init - && pyenv init --path && pyenv virtualenv-init -)"
 {{- if eq .chezmoi.os "linux" }}
 alias ls='ls --color=auto'
 {{ else if eq .chezmoi.os "darwin" }}
-alias ls='ls -Gfh'
+alias ls='ls -GFh'
 {{- end }}
 alias grep='grep --color=auto'
 alias files='fd -uu -g --type=file ""'
