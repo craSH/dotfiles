@@ -2,7 +2,9 @@
 {{- $common_packages := "gnupg gopass ripgrep jq fzf pyenv pyenv-virtualenv" -}}
 {{- $macos_brew_packages := "pinentry-mac romkatv/powerlevel10k/powerlevel10k" -}}
 {{- $debian_apt_packages := "" -}}
-{{-  if eq .chezmoi.os "linux" -}}
+{{- $arch_pacman_packages := "nerd-fonts-complete ttf-meslo-nerd-font-powerlevel10k" -}}
+
+{{- if eq .chezmoi.osRelease.id "debian" -}}
 #!/bin/bash
 {{  if $common_packages -}}
 # Install common packages
@@ -12,6 +14,30 @@ apt-get install {{ $common_packages }}
 {{   if $debian_apt_packages -}}
 # Install debian/ubuntu specific packages
 apt-get install {{ $debian_apt_packages }}
+{{-  end -}}
+
+{{-  else if eq .chezmoi.osRelease.id "arch" -}}
+#!/bin/bash
+# Update package databases
+sudo pacman -Sy
+
+# Install yay for aur support
+sudo pacman --needed -S base-devel git && \
+  yaydir="${HOME}/src/yay" && \
+  mkdir -p "${yaydir}" && \
+  git clone https://aur.archlinux.org/yay.git "${yaydir}" && \
+  cd "${yaydir}" && \
+  makepkg -si && \
+  cd -
+
+{{  if $common_packages -}}
+# Install common packages
+yay -Sy --needed {{ $common_packages }}
+{{-  end }}
+
+{{   if $arch_pacman_packages -}}
+# Install arch specific packages
+yay -Sy --needed {{ $arch_pacman_packages }}
 {{-  end -}}
 
 {{- else if eq .chezmoi.os "darwin" -}}
