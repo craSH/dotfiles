@@ -30,14 +30,16 @@ sudo pacman --needed -S base-devel git && \
   makepkg -si && \
   cd -
 
+yaycmd="yay -Sy --needed --noprovides --answerdiff None --answerclean All --answeredit None --answerupgrade None --noremovemake"
+
 {{  if $common_packages -}}
 # Install common packages
-yay -Sy --needed {{ $common_packages }}
+$yaycmd {{ $common_packages }} <<< Y
 {{-  end }}
 
 {{   if $arch_pacman_packages -}}
 # Install arch specific packages
-yay -Sy --needed {{ $arch_pacman_packages }}
+$yaycmd {{ $arch_pacman_packages }} <<< Y
 {{-  end -}}
 
 {{- else if eq .chezmoi.os "darwin" -}}
