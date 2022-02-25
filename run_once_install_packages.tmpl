@@ -2,7 +2,7 @@
 {{- $common_packages := "gnupg gopass ripgrep jq fzf pyenv pyenv-virtualenv" -}}
 {{- $macos_brew_packages := "pinentry-mac romkatv/powerlevel10k/powerlevel10k" -}}
 {{- $debian_apt_packages := "" -}}
-{{- $arch_pacman_packages := "nerd-fonts-complete ttf-meslo-nerd-font-powerlevel10k" -}}
+{{- $arch_packages := "nerd-fonts-complete ttf-meslo-nerd-font-powerlevel10k diff-so-fancy" -}}
 
 {{- if eq .chezmoi.osRelease.id "debian" -}}
 #!/bin/bash
@@ -37,9 +37,9 @@ yaycmd="yay -Sy --needed --noprovides --answerdiff None --answerclean All --answ
 $yaycmd {{ $common_packages }} <<< Y
 {{-  end }}
 
-{{   if $arch_pacman_packages -}}
+{{   if $arch_packages -}}
 # Install arch specific packages
-$yaycmd {{ $arch_pacman_packages }} <<< Y
+$yaycmd {{ $arch_packages }} <<< Y
 {{-  end -}}
 
 {{- else if eq .chezmoi.os "darwin" -}}
