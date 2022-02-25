@@ -2,7 +2,7 @@
 {{- $common_packages := "gnupg gopass ripgrep jq fzf pyenv pyenv-virtualenv" -}}
 {{- $macos_brew_packages := "pinentry-mac romkatv/powerlevel10k/powerlevel10k" -}}
 {{- $debian_apt_packages := "" -}}
-{{- $arch_packages := "nerd-fonts-complete ttf-meslo-nerd-font-powerlevel10k diff-so-fancy" -}}
+{{- $arch_packages := "pcsclite nerd-fonts-complete ttf-meslo-nerd-font-powerlevel10k diff-so-fancy" -}}
 
 {{- if eq .chezmoi.osRelease.id "debian" -}}
 #!/bin/bash
