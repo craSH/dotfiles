@@ -7,6 +7,7 @@
 # always be loaded last.
 import:
   - ~/.config/alacritty/theme-one-dark.yml
+  - ~/.config/alacritty/99-customizations.yml # This is intentionally not tracked in Chezmoi
 
 # Any items in the `env` entry below will be added as
 # environment variables. Some entries may override variables
