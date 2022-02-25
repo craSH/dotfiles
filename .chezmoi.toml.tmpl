@@ -8,7 +8,10 @@
 {{-     $personal_machine = promptBool "Is this a Personal machine (yes/no)" -}}
 {{- end -}}
 {{- $work_machine := get . "work_machine" -}}{{- if not $work_machine -}}
-{{-     $work_machine = promptBool "Is this a Work machine (yes/no)" -}}
+{{-     $work_machine = promptBool "Is this a Work (0) machine (yes/no)" -}}
+{{- end -}}
+{{- $work_machine_1 := get . "work_machine_1" -}}{{- if not $work_machine_1 -}}
+{{-     $work_machine_1 = promptBool "Is this a Work (1) machine (yes/no)" -}}
 {{- end -}}
 [data]
     name = "Ian Gallagher"
@@ -18,6 +21,7 @@
     gpg_fingerprint = {{ $gpg_fingerprint | nospace | quote }}
     personal_machine = {{ $personal_machine }}
     work_machine = {{ $work_machine }}
+    work_machine_1 = {{ $work_machine_1 }}
 
 [diff]
     pager = "diff-so-fancy"
