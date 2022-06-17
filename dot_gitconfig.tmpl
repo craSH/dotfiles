@@ -1,9 +1,15 @@
 [init]
         defaultBranch = main
 [user]
-        name = "{{ .name }}"
-        email = "{{ .email }}"
-        signingkey = "{{ .gpg_fingerprint }}"
+        {{ if eq .context.git.identity "work" -}}
+        name = "{{ .identity.work.name }}"
+        email = "{{ .identity.work.email }}"
+        signingkey = "{{ .identity.work.gpg_fingerprint }}"
+        {{- else -}}
+        name = "{{ .identity.personal.name }}"
+        email = "{{ .identity.personal.email }}"
+        signingkey = "{{ .identity.personal.gpg_fingerprint }}"
+        {{- end }}
 [commit]
         gpgsign = true
 	verbose = true

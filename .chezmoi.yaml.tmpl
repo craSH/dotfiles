@@ -1,0 +1,15 @@
+{{- $gpg_fingerprint_1 := get . "gpg_fingerprint_1" -}}{{- if not $gpg_fingerprint_1 -}}
+{{-     $gpg_fingerprint_1 = promptString "GPG Fingerprint for chezmoi to encrypt to (1)" -}}
+{{- end -}}
+{{- $gpg_fingerprint_2 := get . "gpg_fingerprint_2" -}}{{- if not $gpg_fingerprint_2 -}}
+{{-     $gpg_fingerprint_2 = promptString "GPG Fingerprint for chezmoi to encrypt to (2)" -}}
+{{- end -}}
+diff:
+  pager: diff-so-fancy
+
+encryption: gpg
+
+gpg:
+  recipients:
+    - {{ $gpg_fingerprint_1 }}
+    - {{ $gpg_fingerprint_2 }}
