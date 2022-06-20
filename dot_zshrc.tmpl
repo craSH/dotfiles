@@ -70,6 +70,7 @@ command -v gopass >/dev/null 2>&1 && eval `gopass completion zsh`
 # GPG Agent (Also for ssh-agent provided by GPG)
 [[ -r ${HOME}/.gnupg/shell-config.sh ]] && source ${HOME}/.gnupg/shell-config.sh
 
+{{- if eq .chezmoi.os "linux" }}
 # Wayland/Wayland
 if loginctl show-session $(loginctl show-user ${USER} -p Display --value) -p Type --value | grep -q wayland ; then
         export XDG_SESSION_TYPE=wayland
@@ -78,6 +79,7 @@ else
         export XDG_SESSION_TYPE=X11
         export GDK_BACKEND=X11
 fi
+{{- end }}
 
 # pyenv
 eval "$(pyenv init - && pyenv init --path && pyenv virtualenv-init -)"
