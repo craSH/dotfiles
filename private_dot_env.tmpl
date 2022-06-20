@@ -2,7 +2,11 @@
 export EDITOR="/usr/bin/vim"
 
 # Default pager (MANPAGER will use this unless set, too)
+{{ if eq .chezmoi.os "darwin" -}}
+export PAGER="/usr/local/bin/bat --style=plain"
+{{ else if eq .chezmoi.os "linux" }}
 export PAGER="/usr/bin/bat --style=plain"
+{{ end }}
 
 # ranger file manager settings
 export RANGER_LOAD_DEFAULT_RC=FALSE
