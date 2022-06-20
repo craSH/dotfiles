@@ -1,0 +1,4 @@
+.vim/bundle/Vundle.vim:
+  type: git-repo
+  url: https://github.com/gmarik/Vundle.vim.git
+  refreshPeriod: 168h
