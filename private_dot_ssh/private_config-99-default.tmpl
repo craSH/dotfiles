@@ -21,6 +21,7 @@ Host *
         ServerAliveInterval 5
         ServerAliveCountMax 3
         AddressFamily inet
+        {{ if not .context.machine.work_managed -}}
         # NOTE: Control* settings are advanced. They can cause SSH to break in
         # unexpected ways, but yield a substantial speed up when you
         # repeatedly login to remote machines.  If you enable them, make sure
@@ -28,6 +29,7 @@ Host *
         ControlPath /tmp/.ssh-%C
         ControlMaster auto
         ControlPersist 60
+        {{ end -}}
         # Disabled because it will kill connections if a route is down even temporarily
         TCPKeepAlive no
         Compression no
