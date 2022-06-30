@@ -4,7 +4,7 @@
 {{- $debian_apt_packages := "" -}}
 {{- $arch_packages := "pcsclite nerd-fonts-complete ttf-meslo-nerd-font-powerlevel10k diff-so-fancy bemenu pinentry-bemenu zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-theme-powerlevel10k-git" -}}
 
-{{- if eq .chezmoi.osRelease.id "debian" -}}
+{{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "debian") -}}
 #!/bin/bash
 {{  if $common_packages -}}
 # Install common packages
@@ -16,7 +16,7 @@ apt-get install {{ $common_packages }}
 apt-get install {{ $debian_apt_packages }}
 {{-  end -}}
 
-{{-  else if eq .chezmoi.osRelease.id "arch" -}}
+{{-  else if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "arch") -}}
 #!/bin/bash
 # Update package databases
 sudo pacman -Sy
