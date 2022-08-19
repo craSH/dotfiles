@@ -1,5 +1,6 @@
 [init]
         defaultBranch = main
+
 [user]
         {{ if eq .context.git.identity "work" -}}
         name = "{{ .identity.work.name }}"
@@ -10,45 +11,54 @@
         email = "{{ .identity.personal.email }}"
         signingkey = "{{ .identity.personal.gpg_fingerprint }}"
         {{- end }}
+
 [commit]
         gpgsign = true
 	verbose = true
 	template = ~/.gitcommittemplate
+
 [core]
-        pager = diff-so-fancy | less --tabs=4 -RFX
+        pager = delta
 	commitGraph = true
+
 [interactive]
-        diffFilter = diff-so-fancy --patch
-[color]
-        ui = true
-[color "diff-highlight"]
-        oldNormal = red bold
-        oldHighlight = red bold 52
-        newNormal = green bold
-        newHighlight = green bold 22
-[color "diff"]
-        meta = 11
-        frag = magenta bold
-        func = 146 bold
-        commit = yellow bold
-        old = red bold
-        new = green bold
-        whitespace = red reverse
-[log]
-	date = relative
+        diffFilter = delta --color-only
+
+[add.interactive]
+        useBuiltin = false # required for git 2.37.0
+
+[delta]
+        navigate = true    # use n and N to move between diff sections
+        light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+
 [merge]
 	renamelimit = 2048
+        conflictstyle = diff3
+
+[diff]
+        colorMoved = default
+
+[color]
+        ui = true
+
+[log]
+	date = relative
+
 [gc]
 	writeCommitGraph = true
+
 [fetch]
 	writeCommitGraph = true
+
 [checkout]
 	defaultRemote = origin
+
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+
 [alias]
 	unstage = reset --
 	l = log --date=iso --pretty='format:%C(Yellow)%h  %C(reset)%ad (%C(Green)%cr%C(reset)) %C(Cyan)%an: %C(reset)%s'
