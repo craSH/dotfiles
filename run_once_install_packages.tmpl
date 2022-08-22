@@ -22,7 +22,7 @@ apt-get install {{ $debian_apt_packages }}
 sudo pacman -Sy
 
 # Install yay for aur support
-sudo pacman --needed -S base-devel git && \
+sudo pacman --needed --noconfirm -S base-devel git && \
   yaydir="${HOME}/src/yay" && \
   mkdir -p "${yaydir}" && \
   git clone https://aur.archlinux.org/yay.git "${yaydir}" && \
@@ -30,16 +30,16 @@ sudo pacman --needed -S base-devel git && \
   makepkg -si && \
   cd -
 
-yaycmd="yay -Sy --needed --noprovides --answerdiff None --answerclean All --answeredit None --answerupgrade None --noremovemake"
+yaycmd="yay -Su --needed --noconfirm --noprovides --answerdiff None --answerclean None --answeredit None --answerupgrade None --noremovemake"
 
 {{  if $common_packages -}}
 # Install common packages
-$yaycmd {{ $common_packages }} <<< Y
+$yaycmd {{ $common_packages }}
 {{-  end }}
 
 {{   if $arch_packages -}}
 # Install arch specific packages
-$yaycmd {{ $arch_packages }} <<< Y
+$yaycmd {{ $arch_packages }}
 {{-  end -}}
 
 {{- else if eq .chezmoi.os "darwin" -}}
