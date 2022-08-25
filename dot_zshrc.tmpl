@@ -48,16 +48,6 @@ source $(brew --prefix)/opt/powerlevel10k/powerlevel10k.zsh-theme
 [[ -r ${HOME}/.env ]] && source ${HOME}/.env
 [[ -r ${HOME}/.env-secure ]] && source ${HOME}/.env-secure
 
-# Path
-export PATH=$HOME/.local/bin:$PATH
-export PATH=$HOME/go/bin:$PATH
-{{ if eq .chezmoi.os "darwin" -}}
-export PATH=$HOME/Library/Python/3.8/bin:$PATH
-{{- end }}
-
-# Custom functions
-fpath=($HOME/.zfunctions $fpath)
-
 # Ripgrep config
 export RIPGREP_CONFIG_PATH=$HOME/.config/ripgreprc
 
@@ -80,9 +70,6 @@ else
         export GDK_BACKEND=X11
 fi
 {{- end }}
-
-# pyenv
-eval "$(pyenv init - && pyenv init --path && pyenv virtualenv-init -)"
 
 # fzf integration
 [[ -r /usr/share/fzf/key-bindings.zsh ]] && source /usr/share/fzf/key-bindings.zsh
