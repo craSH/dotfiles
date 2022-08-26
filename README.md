@@ -1,10 +1,10 @@
 # craSH's dotfiles
 
-My personal dotfiles managed using [chezmoi](https://github.com/twpayne/chezmoi)
+My personal dotfiles managed using [chezmoi](https://www.chezmoi.io/)
 
 ## 🚀 Install
 
-1) [Install chezmoi](https://github.com/twpayne/chezmoi/blob/master/docs/INSTALL.md)
+1) [Install chezmoi](https://www.chezmoi.io/install/)
 2) Install dotfiles:
 
     ```console
@@ -13,7 +13,7 @@ My personal dotfiles managed using [chezmoi](https://github.com/twpayne/chezmoi)
 
 ## 🔩 Dependencies and pre-requirements
 
-> TODO: Use templated chezmoi scripts to install needed packages automatically.
+> TODO: Improve templated chezmoi run_once scripts (Brewfile for osx packages?)
 
 ## 📝 License
 
