@@ -12,9 +12,9 @@
 # Run `man ssh_config` for more explanation of the settings.
 
 # Include configuration from split out configuration files
-{{ if or .work_machine .work_machine_1 -}}
+{{ if or (.context.machine.work_managed) (.context.machine.work_oob) -}}
 Include config-*-work-*
-{{- else if .personal_machine -}}
+{{- else if .context.machine.personal -}}
 Include config-*-personal*
 {{- end }}
 Include config-9*
