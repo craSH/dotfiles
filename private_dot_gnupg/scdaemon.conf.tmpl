@@ -6,3 +6,6 @@ reader-port "Yubico YubiKey OTP+FIDO+CCID"
 card-timeout 5
 disable-ccid
 pcsc-shared
+# Workaround to get sane PIN caching on macOS - seems irrelevent on Linux
+# Source: https://dev.gnupg.org/T5436#148656
+disable-application piv
