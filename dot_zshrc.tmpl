@@ -60,6 +60,12 @@ command -v op >/dev/null 2>&1 && eval "$(op completion zsh)" && compdef _op op
 # gopass completion
 command -v gopass >/dev/null 2>&1 && eval `gopass completion zsh`
 
+# github-cli completion
+command -v gh >/dev/null 2>&1 && eval `gh completion -s zsh`
+
+# twilio completion
+command -v twilio >/dev/null 2>&1 && eval `twilio autocomplete:script zsh`
+
 # GPG Agent (Also for ssh-agent provided by GPG)
 [[ -r ${HOME}/.gnupg/shell-config.sh ]] && source ${HOME}/.gnupg/shell-config.sh
 
@@ -78,9 +84,18 @@ fi
 [[ -r /usr/share/fzf/key-bindings.zsh ]] && source /usr/share/fzf/key-bindings.zsh
 [[ -r /usr/share/fzf/completion.zsh ]] && source /usr/share/fzf/completion.zsh
 [[ -r ${HOME}/.config/fzf/fzf.sh ]] && source ${HOME}/.config/fzf/fzf.sh
+[[ -r ${HOME}/.fzf.zsh ]] && source ${HOME}/.fzf.zsh
 
 # Pet
 [[ -r ${HOME}/.config/pet/pet.zsh ]] && source ${HOME}/.config/pet/pet.zsh
+
+# Podman/Docker
+podman_sock="${HOME}/.local/share/containers/podman/machine/podman-machine-default/podman.sock"
+if [[ -S "$podman_sock" ]]; then
+        export DOCKER_HOST="unix://${podman_sock}"
+        alias docker="podman"
+        alias docker-compose="podman-compose"
+fi
 
 # Custom aliases
 {{- if eq .chezmoi.os "linux" }}
