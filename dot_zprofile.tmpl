@@ -9,6 +9,9 @@ export PATH=$HOME/go/bin:$PATH
 {{ if eq .chezmoi.os "darwin" -}}
 export PATH=$HOME/Library/Python/3.8/bin:$PATH
 {{- end }}
+if [[ -x /opt/android-platform-tools ]]; then
+        export PATH=/opt/android-platform-tools:$PATH
+fi
 
 # pyenv
 eval "$(pyenv init - && pyenv init --path && pyenv virtualenv-init -)"

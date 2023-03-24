@@ -13,6 +13,10 @@ set splitright
 set nocompatible              " required
 filetype off                  " required
 
+" Fix up encoding on wonky systems
+set encoding=utf-8
+scriptencoding utf-8
+
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
