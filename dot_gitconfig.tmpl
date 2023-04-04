@@ -2,14 +2,14 @@
         defaultBranch = main
 
 [user]
-        {{ if eq .context.git.identity "work" -}}
-        name = "{{ .identity.work.name }}"
-        email = "{{ .identity.work.email }}"
-        signingkey = "{{ .identity.work.gpg_fingerprint }}"
-        {{- else -}}
+        {{ if .context.machine.personal -}}
         name = "{{ .identity.personal.name }}"
         email = "{{ .identity.personal.email }}"
         signingkey = "{{ .identity.personal.gpg_fingerprint }}"
+        {{- else -}}
+        name = "{{ .identity.work.name }}"
+        email = "{{ .identity.work.email }}"
+        signingkey = "{{ .identity.work.gpg_fingerprint }}"
         {{- end }}
 
 [commit]
