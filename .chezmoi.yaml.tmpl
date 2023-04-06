@@ -13,3 +13,5 @@ gpg:
   recipients:
     - {{ $gpg_fingerprint_1 }}
     - {{ $gpg_fingerprint_2 }}
+  args:
+    - "--quiet"

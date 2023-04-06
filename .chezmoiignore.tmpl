@@ -1,3 +1,7 @@
 README.md
 LICENSE
 secrets
+
+{{ if ne .chezmoi.os "darwin" }}
+Library/**
+{{ end }}
