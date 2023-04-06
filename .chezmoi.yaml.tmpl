@@ -15,3 +15,14 @@ gpg:
     - {{ $gpg_fingerprint_2 }}
   args:
     - "--quiet"
+
+pinentry:
+  command: {{ if eq .chezmoi.os "linux" -}}
+{{ .chezmoi.homeDir }}/.gnupg/.pinentry
+{{- else if eq .chezmoi.os "darwin" -}}
+{{ if eq .chezmoi.arch "arm64" -}}
+/opt/homebrew/bin/pinentry-mac
+{{- else -}}
+/usr/local/bin/pinentry-mac
+{{- end }}
+{{- end }}
