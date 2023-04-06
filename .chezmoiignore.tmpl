@@ -2,6 +2,10 @@ README.md
 LICENSE
 secrets
 
+{{ if ne .chezmoi.os "linux" }}
+private_dot_local/private_share/private_applications
+{{ end }}
+
 {{ if ne .chezmoi.os "darwin" }}
 Library/**
 {{ end }}
