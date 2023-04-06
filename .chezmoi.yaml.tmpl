@@ -1,9 +1,56 @@
-{{- $gpg_fingerprint_1 := get . "gpg_fingerprint_1" -}}{{- if not $gpg_fingerprint_1 -}}
-{{-     $gpg_fingerprint_1 = promptString "GPG Fingerprint for chezmoi to encrypt to (1)" -}}
+{{/* feature tags/defaults */}}
+{{- $docker := false -}}{{/* true if this machine should have Docker installed */}}
+{{- $ephemeral := false -}}{{/* true if this machine is ephemeral, e.g. a cloud or VM instance */}}
+{{- $headless := false -}}{{/* true if this machine does not have a screen and keyboard */}}
+
+{{- $name_personal := promptStringOnce . "identity.personal.name" "Name (personal)" "Ian Gallagher" -}}
+{{- $email_personal := promptStringOnce . "identity.personal.email" "Email (personal)" "cdine@cdine.org" -}}
+{{- $username_personal := promptStringOnce . "identity.personal.username" "Username (personal)" "craSH" -}}
+{{- $gpg_fingerprint_personal := promptStringOnce . "identity.personal.gpg_fingerprint" "GPG Fingerprint for chezmoi to encrypt to (personal)" -}}
+
+{{- $name_work := promptStringOnce . "identity.work.name" "Name (work)" "Ian Gallagher" -}}
+{{- $email_work := promptStringOnce . "identity.work.email" "Email (work)" -}}
+{{- $username_work := promptStringOnce . "identity.work.username" "Username (work)" -}}
+{{- $gpg_fingerprint_work := promptStringOnce . "identity.work.gpg_fingerprint" "GPG Fingerprint for chezmoi to encrypt to (work)" -}}
+
+{{- $personal := promptBoolOnce . "context.machine.personal" "Is this a personal machine" true -}}{{/* true if this machine should have personal secrets */}}
+{{- $work_managed := promptBoolOnce . "context.machine.work_managed" "Is this a work (managed) machine" false -}}{{/* true if this machine should have work (managed) secrets */}}
+{{- $work_oob := promptBoolOnce . "context.machine.work_oob" "Is this a work (OOB) machine" false -}}{{/* true if this machine should have work (out-of-band) secrets */}}
+{{- $git_identity := promptStringOnce . "context.git.identity" "Git identity to use (personal/work)" "personal" -}}{{/* which identity should the git user be set to */}}
+{{- "" -}}
+
+{{- $osID := .chezmoi.os -}}
+{{- if (and (eq .chezmoi.os "linux") (hasKey .chezmoi.osRelease "id")) -}}
+{{-   $osID = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
 {{- end -}}
-{{- $gpg_fingerprint_2 := get . "gpg_fingerprint_2" -}}{{- if not $gpg_fingerprint_2 -}}
-{{-     $gpg_fingerprint_2 = promptString "GPG Fingerprint for chezmoi to encrypt to (2)" -}}
-{{- end -}}
+
+data:
+  gpg_fingerprint_personal: {{ $gpg_fingerprint_personal }}
+  gpg_fingerprint_work: {{ $gpg_fingerprint_work }}
+  docker: {{ $docker }}
+  ephemeral: {{ $ephemeral }}
+  osid: {{ $osID | quote }}
+  headless: {{ $headless }}
+  personal: {{ $personal }}
+  identity:
+    personal:
+      name: {{ $name_personal }}
+      email: {{ $email_personal }}
+      username: {{ $username_personal }}
+      gpg_fingerprint: {{ $gpg_fingerprint_personal }}
+    work:
+      name: {{ $name_work }}
+      email: {{ $email_work }}
+      username: {{ $username_work }}
+      gpg_fingerprint: {{ $gpg_fingerprint_work }}
+  context:
+    machine:
+      personal: {{ $personal }}
+      work_managed: {{ $work_managed }}
+      work_oob: {{ $work_oob }}
+    git:
+      identity: {{ $git_identity }}
+
 diff:
   command: delta
 
@@ -11,8 +58,8 @@ encryption: gpg
 
 gpg:
   recipients:
-    - {{ $gpg_fingerprint_1 }}
-    - {{ $gpg_fingerprint_2 }}
+    - {{ $gpg_fingerprint_personal }}
+    - {{ $gpg_fingerprint_work }}
   args:
     - "--quiet"
 
