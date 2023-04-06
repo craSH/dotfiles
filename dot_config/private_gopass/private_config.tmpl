@@ -1,0 +1,18 @@
+[core]
+	notifications = true
+	nopager = false
+	showsafecontent = false
+	cliptimeout = 45
+	autoimport = false
+	autoclip = false
+	parsing = true
+	exportkeys = true
+
+[mounts]
+	path = {{ .chezmoi.homeDir }}/.local/share/gopass/stores/root
+
+[mounts "_dotfiles"]
+	path = {{ .chezmoi.homeDir }}/.local/share/chezmoi/secrets
+
+[recipients]
+	hash = 18aca6c43a1046d6c1eef99fe3d533b3b0ff7d9b85bfcd371612e89ed041ec9a
