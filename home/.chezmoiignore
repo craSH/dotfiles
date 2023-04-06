@@ -1,7 +1,3 @@
-README.md
-LICENSE
-secrets
-
 {{ if ne .chezmoi.os "linux" }}
 .local/share/applications/
 {{ end }}
