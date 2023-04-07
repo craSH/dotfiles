@@ -54,6 +54,14 @@ source $(brew --prefix)/opt/powerlevel10k/powerlevel10k.zsh-theme
 # Ripgrep config
 export RIPGREP_CONFIG_PATH=$HOME/.config/ripgreprc
 
+# bat config
+export BAT_THEME="Coldark-Dark"
+if command -v bat >/dev/null 2>&1 ; then
+        export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+elif command -v batcat >/dev/null 2>&1 ; then
+        export MANPAGER="sh -c 'col -bx | batcat -l man -p'"
+fi
+
 # 1Password completion
 command -v op >/dev/null 2>&1 && eval "$(op completion zsh)" && compdef _op op
 
