@@ -89,6 +89,12 @@ fi
 # Pet
 [[ -r ${HOME}/.config/pet/pet.zsh ]] && source ${HOME}/.config/pet/pet.zsh
 
+{{ if eq .chezmoi.os "darwin" -}}
+# iTerm shell integration
+[[ -r ${HOME}/.iterm2_shell_integration.zsh ]] && source ${HOME}/.iterm2_shell_integration.zsh
+{{ "" }}
+{{ end -}}
+
 # Podman/Docker
 podman_sock="${HOME}/.local/share/containers/podman/machine/podman-machine-default/podman.sock"
 if [[ -S "$podman_sock" ]]; then
