@@ -1,8 +1,8 @@
 {{- /* vim set filetype=sh: */ -}}
-{{- $common_packages := "git-delta gnupg gopass ripgrep jq fzf pyenv pyenv-virtualenv zsh" -}}
-{{- $macos_brew_packages := "pinentry-mac romkatv/powerlevel10k/powerlevel10k fd gh github" -}}
+{{- $common_packages := "bat git-delta gnupg gopass ripgrep jq fzf pyenv pyenv-virtualenv zsh" -}}
+{{- $macos_brew_packages := "bat-extras pinentry-mac romkatv/powerlevel10k/powerlevel10k fd gh github" -}}
 {{- $debian_apt_packages := "" -}}
-{{- $arch_packages := "pcsclite nerd-fonts-complete ttf-meslo-nerd-font-powerlevel10k bemenu pinentry-bemenu zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-theme-powerlevel10k-git" -}}
+{{- $arch_packages := "bat-extras pcsclite nerd-fonts-complete ttf-meslo-nerd-font-powerlevel10k bemenu pinentry-bemenu zsh-autosuggestions zsh-completions zsh-syntax-highlighting zsh-theme-powerlevel10k-git" -}}
 
 {{- if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "debian") -}}
 #!/bin/bash

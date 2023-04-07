@@ -1,0 +1,10 @@
+{{- /* vim set filetype=sh: */ -}}
+{{- if or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin") -}}
+#!/bin/bash
+echo -n "Installing Vim Plugins via Vundle..."
+if ! (echo | vim +PluginInstall +qall &>/dev/null); then
+  echo " Failed!" >&2
+else
+  echo " Success!"
+fi
+{{- end }}
