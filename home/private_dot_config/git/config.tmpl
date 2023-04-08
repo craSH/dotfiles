@@ -1,3 +1,4 @@
+{{/* vim: set filetype=gitconfig: */}}
 [init]
         defaultBranch = main
 
@@ -15,7 +16,7 @@
 [commit]
         gpgsign = true
 	verbose = true
-	template = ~/.gitcommittemplate
+	template = {{ .chezmoi.homeDir }}/.config/git/commit.template
 
 [core]
         pager = delta
@@ -30,6 +31,9 @@
 [delta]
         navigate = true    # use n and N to move between diff sections
         light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+        line-numbers = true
+        side-by-side = true
+        features = DarkNeon
 
 [merge]
 	renamelimit = 2048
@@ -70,10 +74,15 @@
 	#lg = log --pretty='format:%C(auto,yellow)%h%C(auto,magenta)% G? %C(auto,blue)%>(12,trunc)%ad %C(auto,green)%<(14,trunc)%aN%C(auto,reset)%s%C(auto,red)% gD% D'
 	#lol = log --graph --pretty=oneline --abbrev-commit --decorate=short
 
-[credential "https://github.com"]
-    helper =
-    helper = !/opt/homebrew/bin/gh auth git-credential
+[url "git@github.com:chezmoi/"]
+	insteadOf = https://github.com/chezmoi/
+[url "git@github.com:twpayne/"]
+	insteadOf = https://github.com/twpayne/
 
+{{- $ghPath := lookPath "gh" }}
+{{- if $ghPath }}
+[credential "https://github.com"]
+	helper = !{{ $ghPath }} auth git-credential
 [credential "https://gist.github.com"]
-    helper =
-    helper = !/opt/homebrew/bin/gh auth git-credential
+	helper = !{{ $ghPath }} auth git-credential
+{{- end }}

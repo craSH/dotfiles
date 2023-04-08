@@ -4,3 +4,8 @@
 
 # case-figure-it-out by default
 --smart-case
+
+--line-number
+
+# Sorting forces single-threaded operation
+#--sort=path
