@@ -1,7 +1,33 @@
-{{ if ne .chezmoi.os "linux" }}
-.local/share/applications/
+{{ if ne .chezmoi.os "darwin" }}
+.chezmoiscripts/darwin/**
+Library/
 {{ end }}
 
-{{ if ne .chezmoi.os "darwin" }}
-Library/
+{{ if ne .chezmoi.os "linux" }}
+.chezmoiscripts/linux/**
+.hushlogin
+.local/share/applications/
+.local/share/fonts
+{{ end }}
+
+{{ if ne .chezmoi.os "windows" }}
+.chezmoiscripts/windows/**
+{{ else }}
+.config
+.gitcommittemplate
+.gitconfig
+.p10k.zsh
+.pam_environment
+.tmux.conf
+.vim
+.vimrc
+.zfunctions
+.zprofile
+.zshrc
+.env
+.gnupg
+.local
+.ssh
+code
+src
 {{ end }}
