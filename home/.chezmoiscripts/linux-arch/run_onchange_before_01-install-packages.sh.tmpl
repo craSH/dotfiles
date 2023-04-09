@@ -66,7 +66,7 @@ set -eufo pipefail
 
 # Install yay for aur support
 {{ $sudo }}{{ $pacman_install }} base-devel git
-{{ if not lookPath "yay" }}
+{{ if not (lookPath "yay") }}
 pushd $HOME/src/yay
 makepkg --syncdeps --install --needed --noconfirm
 popd
