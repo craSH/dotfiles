@@ -61,7 +61,7 @@ sudo pacman -Syu
 {{ $sudo }}pacman-key --populate archlinux
 # Install dependencies required to install yay (SteamOS)
 {{ $sudo }}pacman {{ $pacman_args }} holo-rel/linux-headers linux-neptune-headers holo-rel/linux-lts-headers glibc gcc gcc-libs fakeroot linux-api-headers libarchive
-{{ else -}}
+{{ end -}}
 
 # Install yay for aur support
 {{ $sudo }}pacman {{ $pacman_args }} base-devel git
@@ -85,5 +85,4 @@ yay {{ $pacman_args }} {{ range $packages_aur }}
 {{   end }}
 {{ end -}}
 
-{{ end -}}
-{{ end -}}
+{{- end }}
