@@ -20,7 +20,7 @@
   "zsh"
   "zsh-autosuggestions"
   "zsh-syntax-highlighting"
-  "zsh-theme-powerlevel9k"
+  "zsh-theme-powerlevel10k"
   "zzuf" -}}
 
 {{/* Aur packages */}}
@@ -52,7 +52,7 @@
 set -eufo pipefail
 
 # Update package databases and all currently installed packaged
-{{ $sudo }}pacman -Syu
+{{ $sudo }}pacman -Syu --noconfirm
 
 {{ if eq .osid "linux-steamos" -}}
 # SteamOS/yay bootstrapping steps from
