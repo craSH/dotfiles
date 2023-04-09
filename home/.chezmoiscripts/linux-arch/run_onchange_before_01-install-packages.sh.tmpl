@@ -52,7 +52,7 @@
 set -eufo pipefail
 
 # Update package databases and all currently installed packaged
-sudo pacman -Syu
+{{ $sudo }}pacman -Syu
 
 {{ if eq .osid "linux-steamos" -}}
 # SteamOS/yay bootstrapping steps from
@@ -61,17 +61,17 @@ sudo pacman -Syu
 {{ $sudo }}pacman-key --init
 {{ $sudo }}pacman-key --populate archlinux
 # Install dependencies required to install yay (SteamOS)
-{{ $sudo }} {{ $pacman_install }} holo-rel/linux-headers linux-neptune-headers holo-rel/linux-lts-headers glibc gcc gcc-libs fakeroot linux-api-headers libarchive
+{{ $sudo }}{{ $pacman_install }} holo-rel/linux-headers linux-neptune-headers holo-rel/linux-lts-headers glibc gcc gcc-libs fakeroot linux-api-headers libarchive
 {{ end -}}
 
 # Install yay for aur support
-{{ $sudo }} {{ $pacman_install }} base-devel git
+{{ $sudo }}{{ $pacman_install }} base-devel git
 pushd $HOME/src/yay
 makepkg -si
 popd
 
 {{/* Go text/template really is not my favorite. This effectively is " ".join($packages) but so much uglier */}}
-{{ $sudo }} {{ $pacman_install }} {{ range $packages }}
+{{ $sudo }}{{ $pacman_install }} {{ range $packages }}
 {{- . -}}{{- " " -}}
 {{ end }}
 
