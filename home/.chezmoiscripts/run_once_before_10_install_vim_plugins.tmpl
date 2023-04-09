@@ -1,5 +1,5 @@
 {{- /* vim set filetype=sh.chezmoitmpl: */ -}}
-{{- if lookpath "vim" -}}
+{{- if lookPath "vim" -}}
 #!/bin/bash
 echo -n "Installing Vim Plugins via Vundle..."
 if ! (echo | vim +PluginInstall +qall &>/dev/null); then
