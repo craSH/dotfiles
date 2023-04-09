@@ -28,7 +28,8 @@
   "pyenv-virtualenv"
   -}}
 
-{{ $pacman_args := "-Su --needed --noconfirm --noprovides --answerdiff None --answerclean None --answeredit None --answerupgrade None --noremovemake" }}
+{{ $pacman_install := "-Su --needed --noconfirm" }}
+{{ $yay_install := "-Su --needed --noconfirm --noprovides --answerdiff None --answerclean None --answeredit None --answerupgrade None --noremovemake" }}
 
 {{ $classicSnaps := list -}}
 
@@ -60,22 +61,22 @@ sudo pacman -Syu
 {{ $sudo }}pacman-key --init
 {{ $sudo }}pacman-key --populate archlinux
 # Install dependencies required to install yay (SteamOS)
-{{ $sudo }}pacman {{ $pacman_args }} holo-rel/linux-headers linux-neptune-headers holo-rel/linux-lts-headers glibc gcc gcc-libs fakeroot linux-api-headers libarchive
+{{ $sudo }} {{ $pacman_install }} holo-rel/linux-headers linux-neptune-headers holo-rel/linux-lts-headers glibc gcc gcc-libs fakeroot linux-api-headers libarchive
 {{ end -}}
 
 # Install yay for aur support
-{{ $sudo }}pacman {{ $pacman_args }} base-devel git
+{{ $sudo }} {{ $pacman_install }} base-devel git
 pushd $HOME/src/yay
 makepkg -si
 popd
 
 {{/* Go text/template really is not my favorite. This effectively is " ".join($packages) but so much uglier */}}
-pacman {{ $pacman_args }} {{ range $packages }}
+{{ $sudo }} {{ $pacman_install }} {{ range $packages }}
 {{- . -}}{{- " " -}}
 {{ end }}
 
 {{/* Same for $packages_aur */}}
-yay {{ $pacman_args }} {{ range $packages_aur }}
+{{ $yay_install }} {{ range $packages_aur }}
 {{- . -}}{{- " " -}}
 {{ end -}}
 
