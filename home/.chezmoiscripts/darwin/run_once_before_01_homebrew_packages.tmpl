@@ -1,6 +1,11 @@
 #!/bin/bash
-# Brewfile hash: {{ include "../assets/darwin/Brewfile" | sha256sum }}
-brewfile="{{ .chezmoi.workingTree }}/assets/darwin/Brewfile"
+# Brewfile template hash: {{ include "../assets/darwin/Brewfile.tmpl" | sha256sum }}
+# The brewfile in source control is a Chezmoi template so chezmoi logic can be used to control what
+# packages/etc are installed - it must be manually rendered before brew can use it.
+# This is done below.
+brewfile_template="{{ .chezmoi.workingTree }}/assets/darwin/Brewfile.tmpl"
+brewfile=$(mktemp)
+chezmoi execute-template < "$brewfile_template" > "$brewfile"
 
 install_homebrew() {
 {{- if .headless }}
@@ -32,3 +37,6 @@ install_bundle
 # Homebrew is installed
 install_bundle
 {{ end -}}
+
+# Clean up rendered brewfile
+rm -f "$brewfile"

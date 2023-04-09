@@ -1,34 +1,85 @@
-# vim: set ft=ruby:
+# vim: set filetype=ruby:
+{{/* vim: set filetype=ruby.chezmoitmpl: */}}
 # Brewfile/brew bundle documentation: https://github.com/Homebrew/homebrew-bundle
 
 # Custom taps (brew tap)
+tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/cask-fonts" # Nerd Fonts: https://www.nerdfonts.com/
+tap "homebrew/core"
+{{ if .context.machine.personal -}}
+tap "mistertea/et"
+{{ end -}}
+tap "romkatv/powerlevel10k"
+tap "sidneys/homebrew"
+{{ if .context.machine.personal -}}
+tap "twilio/brew"
+{{- end }}
 
 # set arguments for all 'brew install --cask' commands
 cask_args appdir: "~/Applications", require_sha: true
 
 # Formulae (brew install)
+brew "age"
 brew "bat"
 brew "bat-extras"
+brew "chezmoi"
+brew "croc"
+brew "exiftool"
 brew "fd"
+brew "ffmpeg"
+brew "ffuf"
 brew "fzf"
 brew "gh"
 brew "git-delta"
 brew "gnupg"
+brew "go"
 brew "gopass"
+brew "htop"
+brew "imagemagick"
+brew "iperf3"
 brew "jq"
 brew "mas"
+{{ if .context.machine.personal -}}
+brew "mistertea/et/et"
+{{ end -}}
+brew "moreutils" # sponge, parallel
+brew "mosh"
+brew "mtr"
+brew "naabu"
+brew "ncdu"
+brew "nmap"
+brew "nuclei"
+brew "openssh"
 brew "pinentry-mac"
+brew "pipx"
+brew "pre-commit"
+brew "pv"
 brew "pyenv"
 brew "pyenv-virtualenv"
+brew "rclone"
 brew "ripgrep"
 brew "romkatv/powerlevel10k/powerlevel10k"
+brew "sevenzip"
+brew "sipcalc"
+brew "speedtest-cli"
+brew "terraform"
+brew "tflint"
+brew "tmux"
+brew "twilio/brew/twilio"
+brew "virtualenv"
+brew "wget"
+brew "ykman"
+brew "yq"
 brew "zsh"
 
 # Casks (brew install --cask)
-cask "iterm2"
+{{ if .context.machine.personal -}}
+cask "1password-cli"
+{{ end -}}
 cask "github"
+cask "iterm2"
+cask "keybase"
 
 # Nerd Fonts: https://www.nerdfonts.com/
 cask "font-3270-nerd-font"
