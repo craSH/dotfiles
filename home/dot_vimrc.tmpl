@@ -1,7 +1,6 @@
 " vim: set ft=vim:
 let python_highlight_all=1
 syntax on
-set nu
 
 set hlsearch
 set incsearch
@@ -11,7 +10,9 @@ set splitbelow
 set splitright
 
 set nocompatible              " required
-filetype off                  " required
+filetype off                  " required for plugin to handle filetype detection
+set modeline                  " https://vim.fandom.com/wiki/Modeline_magic
+set modelines=5
 
 " Fix up encoding on wonky systems
 set encoding=utf-8
@@ -119,7 +120,9 @@ set scrolloff=3
 let g:smoothie_speed_constant_factor=30
 let g:smoothie_speed_linear_factor=30
 
-" Show numbers relative to cursor
+" Show line numbers as absolute in file
+"set number
+" Show line numbers as relative to current cursor position
 set relativenumber
 
 "
@@ -241,12 +244,14 @@ au BufNewFile,BufRead *.rs
     \ let g:rustfmt_autosave = 1
 
 " Custom settings for gopass editing, to prevent leaking plaintext
+{{ if lookPath "gopass" -}}
 {{ if (eq .chezmoi.os "linux") -}}
 au BufNewFile,BufRead /dev/shm/gopass.*
     \ setlocal noswapfile nobackup noundofile
 {{ else if (eq .chezmoi.os "darwin" ) }}
 au BufNewFile,BufRead /private/**/gopass**
     \ setlocal noswapfile nobackup noundofile
+{{ end }}
 {{ end }}
 " Flag unnecessary whitepsace
 highlight BadWhitespace ctermbg=red guibg=darkred

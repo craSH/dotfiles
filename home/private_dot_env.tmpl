@@ -1,8 +1,16 @@
 # Default editor
-export EDITOR="$(which vim)"
+export EDITOR="$(command -v vim)"
+
+# bat config
+if command -v bat >/dev/null 2>&1 ; then
+  export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+  export BAT_THEME="Coldark-Dark"
+elif command -v batcat >/dev/null 2>&1 ; then
+  export MANPAGER="sh -c 'col -bx | batcat -l man -p'"
+fi
 
 # Default pager (MANPAGER will use this unless set, too)
-export PAGER="$(which bat) --style=plain"
+export PAGER="$(command -v bat) --style=plain"
 
 # ranger file manager settings
 export RANGER_LOAD_DEFAULT_RC=FALSE
