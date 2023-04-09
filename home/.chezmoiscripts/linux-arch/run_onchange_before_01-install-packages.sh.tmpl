@@ -61,14 +61,16 @@ set -eufo pipefail
 {{ $sudo }}pacman-key --init
 {{ $sudo }}pacman-key --populate archlinux
 # Install dependencies required to install yay (SteamOS)
-{{ $sudo }}{{ $pacman_install }} holo-rel/linux-headers linux-neptune-headers holo-rel/linux-lts-headers glibc gcc gcc-libs fakeroot linux-api-headers libarchive
+{{ $sudo }}{{ $pacman_install }} holo-rel/linux-headers linux-neptune-headers holo-rel/linux-lts-headers glibc gcc gcc-libs fakeroot linux-api-headers libarchive libisl libmpc
 {{ end -}}
 
 # Install yay for aur support
 {{ $sudo }}{{ $pacman_install }} base-devel git
+{{ if not lookPath "yay" }}
 pushd $HOME/src/yay
-makepkg -si
+makepkg --syncdeps --install --needed --noconfirm
 popd
+{{ end }}
 
 {{/* Go text/template really is not my favorite. This effectively is " ".join($packages) but so much uglier */}}
 {{ $sudo }}{{ $pacman_install }} {{ range $packages }}
