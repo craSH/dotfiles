@@ -28,8 +28,8 @@
   "pyenv-virtualenv"
   -}}
 
-{{ $pacman_install := "-Su --needed --noconfirm" }}
-{{ $yay_install := "-Su --needed --noconfirm --noprovides --answerdiff None --answerclean None --answeredit None --answerupgrade None --noremovemake" }}
+{{ $pacman_install := "pacman -Su --needed --noconfirm" }}
+{{ $yay_install := "yay -Su --needed --noconfirm --noprovides --answerdiff None --answerclean None --answeredit None --answerupgrade None --noremovemake" }}
 
 {{ $classicSnaps := list -}}
 
