@@ -1,0 +1,89 @@
+{{- if eq .osid "linux-arch" "linux-manjaro" "linux-steamos" }}
+
+{{/* pacman packages */}}
+{{ $packages := list
+  "bat"
+  "bat-extras"
+  "curl"
+  "fd"
+  "fzf"
+  "git-delta"
+  "git-lfs"
+  "gnupg"
+  "gopass"
+  "jq"
+  "pcsclite"
+  "pyenv"
+  "ripgrep"
+  "wget"
+  "yq"
+  "zsh"
+  "zsh-autosuggestions"
+  "zsh-syntax-highlighting"
+  "zsh-theme-powerlevel9k"
+  "zzuf" -}}
+
+{{/* Aur packages */}}
+{{ $packages_aur := list
+  "pyenv-virtualenv"
+  -}}
+
+{{ $pacman_args := "-Su --needed --noconfirm --noprovides --answerdiff None --answerclean None --answeredit None --answerupgrade None --noremovemake" }}
+
+{{ $classicSnaps := list -}}
+
+{{ if not .headless -}}
+{{   $packages = mustAppend $packages "xclip" -}}
+{{   $packages = mustAppend $packages "wl-clipboard" -}}
+{{   $classicSnaps = mustAppend $classicSnaps "code" -}}
+{{ end -}}
+
+{{ if .personal -}}
+{{/*   $classicSnaps = mustAppend $classicSnaps "goreleaser" */}}
+{{ end -}}
+
+{{ $sudo := "sudo " -}}
+{{ if eq .chezmoi.username "root" -}}
+{{   $sudo = "" -}}
+{{ end -}}
+
+#!/bin/bash
+set -eufo pipefail
+
+# Update package databases and all currently installed packaged
+sudo pacman -Syu
+
+{{ if eq .osid "linux-steamos" -}}
+# SteamOS/yay bootstrapping steps from
+# https://www.reddit.com/r/SteamDeck/comments/zlgmz6/yay_package_removed_or_any_other_good_guide_on_aur/
+{{ $sudo }}steamos-readonly disable
+{{ $sudo }}pacman-key --init
+{{ $sudo }}pacman-key --populate archlinux
+# Install dependencies required to install yay (SteamOS)
+{{ $sudo }}pacman {{ $pacman_args }} holo-rel/linux-headers linux-neptune-headers holo-rel/linux-lts-headers glibc gcc gcc-libs fakeroot linux-api-headers libarchive
+{{ else -}}
+
+# Install yay for aur support
+{{ $sudo }}pacman {{ $pacman_args }} base-devel git
+pushd $HOME/src/yay
+makepkg -si
+popd
+
+{{/* Go text/template really is not my favorite. This effectively is " ".join($packages) but so much uglier */}}
+pacman {{ $pacman_args }} {{ range $packages }}
+{{- . -}}{{- " " -}}
+{{ end }}
+
+{{/* Same for $packages_aur */}}
+yay {{ $pacman_args }} {{ range $packages_aur }}
+{{- . -}}{{- " " -}}
+{{ end -}}
+
+{{ if lookPath "snap" }}
+{{   range $classicSnaps }}
+{{ $sudo }}snap install --classic {{ . }}
+{{   end }}
+{{ end -}}
+
+{{ end -}}
+{{ end -}}

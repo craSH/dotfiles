@@ -4,10 +4,17 @@ Library/
 {{ end }}
 
 {{ if ne .chezmoi.os "linux" }}
-.chezmoiscripts/linux/**
 .hushlogin
 .local/share/applications/
 .local/share/fonts
+{{ end }}
+
+{{ if not (eq .osid "linux-debian" "linux-raspbian" "linux-pop" "linux-ubuntu") -}}
+.chezmoiscripts/linux-debian/**
+{{ end }}
+
+{{ if ne .osid "linux-arch" -}}
+.chezmoiscripts/linux-arch/**
 {{ end }}
 
 {{ if ne .chezmoi.os "windows" }}

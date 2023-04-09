@@ -1,0 +1,51 @@
+{{ if eq .osid "linux-debian" "linux-raspbian" "linux-pop" "linux-ubuntu" -}}
+
+{{ $packages := list
+  "bat"
+  "curl"
+  "fd-find"
+  "fzf"
+  "git-delta"
+  "git-lfs"
+  "gnupg"
+  "gopass"
+  "jq"
+  "pcscd"
+  "pyenv"
+  "pyenv-virtualenv"
+  "ripgrep"
+  "wget"
+  "zsh"
+  "zsh-autosuggestions"
+  "zsh-syntax-highlighting"
+  "zsh-theme-powerlevel9k" -}}
+{{ $classicSnaps := list -}}
+
+{{ if not .headless -}}
+{{   $packages = mustAppend $packages "xclip" "wl-clipboard" -}}
+{{   $classicSnaps = mustAppend $classicSnaps "code" -}}
+{{ end -}}
+
+{{ if .personal -}}
+{{/*   $classicSnaps = mustAppend $classicSnaps "goreleaser" */}}
+{{ end -}}
+
+{{ $sudo := "sudo " -}}
+{{ if eq .chezmoi.username "root" -}}
+{{   $sudo = "" -}}
+{{ end -}}
+
+#!/bin/bash
+
+set -eufo pipefail
+
+{{ $sudo }}apt-get update
+{{ $sudo }}apt-get install -y {{ $packages | join " " }}
+
+{{ if lookPath "snap" }}
+{{   range $classicSnaps }}
+{{ $sudo }}snap install --classic {{ . }}
+{{   end }}
+{{ end }}
+
+{{ end -}}

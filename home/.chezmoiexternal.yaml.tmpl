@@ -1,0 +1,10 @@
+.vim/bundle/Vundle.vim:
+  type: git-repo
+  url: https://github.com/gmarik/Vundle.vim.git
+  refreshPeriod: 168h
+{{- if eq .osid "linux-arch" "linux-manjaro" "linux-steamos" }}
+src/yay:
+  type: git-repo
+  url: https://aur.archlinux.org/yay.git
+  refreshPeriod: 168h
+{{ end }}
