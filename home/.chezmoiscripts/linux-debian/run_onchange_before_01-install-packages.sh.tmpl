@@ -22,7 +22,8 @@
 {{ $classicSnaps := list -}}
 
 {{ if not .headless -}}
-{{   $packages = mustAppend $packages "xclip" "wl-clipboard" -}}
+{{   $packages = mustAppend $packages "xclip" -}}
+{{   $packages = mustAppend $packages "wl-clipboard" -}}
 {{   $classicSnaps = mustAppend $classicSnaps "code" -}}
 {{ end -}}
 
