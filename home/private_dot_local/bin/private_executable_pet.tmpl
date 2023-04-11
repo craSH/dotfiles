@@ -1,8 +1,0 @@
-#!/bin/sh
-export PET_GITHUB_ACCESS_TOKEN={{ gopass "_dotfiles/github/personal_access_token/pet" | quote }}
-
-{{ if eq .osid "darwin" -}}
-/opt/homebrew/bin/pet "$@"
-{{ else if eq .chezmoi.os "linux" -}}
-/usr/bin/pet "$@"
-{{ end -}}
