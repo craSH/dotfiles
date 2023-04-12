@@ -20,9 +20,14 @@ install_homebrew() {
 }
 
 install_bundle() {
-  brew bundle install --file "$brewfile"
+  # Perform a system-wide upgrade first for any already-installed packages
+  if ! brew upgrade ; then
+    echo "ERROR: Failed to upgrade packages with \`brew upgrade\`!" >&2
+    exit 1
+  fi
 
-  if [[ $? -ne 0 ]] ; then
+  # Install packages based on our Brewfile
+  if ! brew bundle install --file "$brewfile" ; then
     echo "ERROR: Failed to install packages with \`brew bundle install --file \"$brewfile\"\`!" >&2
     exit 1
   fi
