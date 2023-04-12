@@ -80,11 +80,32 @@ brew "knqyf263/pet/pet"
 
 # Casks (brew install --cask)
 {{ if .context.machine.personal -}}
-cask "1password-cli"
+cask "backblaze", args: { require_sha: false }
+cask "balenaetcher"
+cask "calibre"
+cask "cryptomator"
+cask "discord"
+cask "handbrake"
+cask "nheko"
+cask "plex"
+cask "signal"
+cask "tailscale"
+cask "todoist"
+cask "vlc"
+cask "zerotier-one"
 {{ end -}}
+cask "1password"
+cask "1password-cli"
+cask "alfred"
+cask "firefox"
 cask "github"
+cask "google-chrome", args: { require_sha: false }
 cask "iterm2"
 cask "keybase"
+cask "obsidian"
+cask "setapp"
+cask "visual-studio-code"
+cask "wireshark"
 
 # Nerd Fonts: https://www.nerdfonts.com/
 cask "font-3270-nerd-font"
