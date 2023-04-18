@@ -3,25 +3,26 @@
 # Brewfile/brew bundle documentation: https://github.com/Homebrew/homebrew-bundle
 
 # Custom taps (brew tap)
+{{ if .context.machine.personal -}}
+tap "mistertea/et"
+tap "twilio/brew"
+{{ end -}}
 tap "buo/cask-upgrade"
 tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/cask-fonts" # Nerd Fonts: https://www.nerdfonts.com/
 tap "homebrew/core"
-{{ if .context.machine.personal -}}
-tap "mistertea/et"
-{{ end -}}
 tap "knqyf263/pet" # pet snippet manager
 tap "romkatv/powerlevel10k"
 tap "sidneys/homebrew"
-{{ if .context.machine.personal -}}
-tap "twilio/brew"
-{{- end }}
 
 # set arguments for all 'brew install --cask' commands
 cask_args appdir: "~/Applications", require_sha: true
 
 # Formulae (brew install)
+{{ if .context.machine.personal -}}
+brew "mistertea/et/et"
+{{ end -}}
 brew "age"
 brew "bat"
 brew "bat-extras"
@@ -43,9 +44,8 @@ brew "imagemagick"
 brew "iperf3"
 brew "jq"
 brew "mas"
-{{ if .context.machine.personal -}}
-brew "mistertea/et/et"
-{{ end -}}
+brew "node"
+brew "nvm"
 brew "moreutils" # sponge, parallel
 brew "mosh"
 brew "mtr"
@@ -98,6 +98,8 @@ cask "zerotier-one"
 cask "1password", args: { appdir: "/Applications" }
 cask "1password-cli"
 cask "alfred"
+cask "burp-suite"
+cask "docker"
 cask "firefox"
 cask "github"
 cask "google-chrome", args: { require_sha: false }
