@@ -9,7 +9,7 @@ fi
 
 zstyle ':completion:*' completer _expand _complete _ignored _approximate
 zstyle ':completion:*' max-errors 1
-zstyle :compinstall filename "${HOME}/.zshrc"
+zstyle :compinstall filename "${ZDOTDIR}/.zshrc"
 
 autoload -Uz compinit
 compinit
@@ -42,11 +42,11 @@ source $(brew --prefix)/opt/powerlevel10k/powerlevel10k.zsh-theme
 {{- end }}
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ -r ~/.p10k.zsh ]] && source ~/.p10k.zsh
+[[ -r ${ZDOTDIR}/.p10k.zsh ]] && source ${ZDOTDIR}/.p10k.zsh
 # End of Powerline10k config
 
 # Load .zprofile which has paths, fpaths
-[[ -r ${HOME}/.zprofile ]] && source ${HOME}/.zprofile
+[[ -r ${ZDOTDIR}/.zprofile ]] && source ${ZDOTDIR}/.zprofile
 
 # Load any custom environment variables, including secure ones
 [[ -r ${HOME}/.env ]] && source ${HOME}/.env
@@ -93,16 +93,10 @@ fi
 {{ "" }}
 {{ end -}}
 
-# Podman/Docker
-podman_sock="${HOME}/.local/share/containers/podman/machine/podman-machine-default/podman.sock"
-if [[ -S "$podman_sock" ]]; then
-        export DOCKER_HOST="unix://${podman_sock}"
-        alias docker="podman"
-        alias docker-compose="podman-compose"
-fi
-
 # Custom aliases
-{{- if eq .chezmoi.os "linux" }}
+{{- if lookPath "lsd" }}
+alias ls='lsd'
+{{- else if eq .chezmoi.os "linux" }}
 alias ls='ls --color=auto'
 {{ else if eq .chezmoi.os "darwin" }}
 alias ls='ls -GFh'

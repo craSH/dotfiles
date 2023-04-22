@@ -1,6 +1,13 @@
 {{ if eq .chezmoi.os "darwin" -}}
 # Homebrew (path, infopath, manpath)
-eval "$(/opt/homebrew/bin/brew shellenv)"
+if [[ -x "/opt/homebrew/bin/brew" ]] ; then
+  brew="/opt/homebrew/bin/brew"
+elif [[ -x "/usr/local/bin/brew" ]] ; then
+  brew="/opt/homebrew/bin/brew"
+fi
+if [[ -n "$brew" ]] ; then
+  eval "$($brew shellenv)"
+fi
 {{- end }}
 
 # PATH - items inserted in front later on will take precedence
@@ -21,7 +28,7 @@ fpath+=("$(brew --prefix)/share/zsh/site-functions")
 {{- end }}
 
 # Custom functions
-fpath+=($HOME/.zfunctions)
+fpath+=($ZDOTDIR/.zfunctions)
 
 export fpath FPATH
 

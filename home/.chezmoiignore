@@ -21,20 +21,15 @@ Library/
 .chezmoiscripts/windows/**
 {{ else }}
 .config
-.gitcommittemplate
-.gitconfig
-.p10k.zsh
-.pam_environment
-.tmux.conf
-.vim
-.vimrc
-.zfunctions
-.zprofile
-.zshrc
 .env
 .gnupg
 .local
+.pam_environment
 .ssh
+.tmux.conf
+.vim
+.vimrc
+.zshenv
 code
 src
 {{ end }}
