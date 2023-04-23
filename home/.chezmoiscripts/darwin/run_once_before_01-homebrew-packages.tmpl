@@ -8,6 +8,9 @@ brewfile=$(mktemp)
 chezmoi execute-template < "$brewfile_template" > "$brewfile"
 
 install_homebrew() {
+# Homebrew does not appear to be installed. Install it.
+# WARNING: This is a potentially dangerous way to install things. Review the installer code before
+# doing so.
 {{- if .headless }}
   NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 {{ else }}
@@ -15,7 +18,10 @@ install_homebrew() {
 {{ end }}
   if [[ $? -ne 0 ]] ; then
     echo 'ERROR: Failed to install Homebrew!' >&2
+    do_cleanup
     exit 1
+  else
+    echo 'INFO: Installed homebrew - please re-run this script to detect brew in path'
   fi
 }
 
@@ -23,25 +29,45 @@ install_bundle() {
   # Perform a system-wide upgrade first for any already-installed packages
   if ! brew upgrade ; then
     echo "ERROR: Failed to upgrade packages with \`brew upgrade\`!" >&2
+    do_cleanup
     exit 1
   fi
 
   # Install packages based on our Brewfile
   if ! brew bundle install --file "$brewfile" ; then
     echo "ERROR: Failed to install packages with \`brew bundle install --file \"$brewfile\"\`!" >&2
+    do_cleanup
     exit 1
   fi
 }
 
-{{ if not (lookPath "brew") -}}
-# Homebrew does not appear to be installed. Install it.
-# WARNING: This is a potentially dangerous way to install things. Review the installer code before doing so.
-install_homebrew
-install_bundle
-{{ else -}}
-# Homebrew is installed
-install_bundle
-{{ end -}}
+do_cleanup() {
+  # Clean up rendered brewfile
+  if ! rm -f "$brewfile"; then
+    echo "ERROR: Failed to remove \"$brewfile\"\ during cleanup!" >&2
+    exit 1
+  fi
+}
 
-# Clean up rendered brewfile
-rm -f "$brewfile"
+# Check if Homebrew is installed - this is awkwardly manual in order to handle
+# bootstrapping situations, including brand-new installs, and running chezmoi
+# from a new user account on a machine that has homebrew installed/configured
+# for another user.
+if [ ! "$(command -v brew)" ]; then
+  if [ -x "/opt/homebrew/bin/brew" ]; then
+    # Default path for Apple Silicon
+    export PATH="/opt/homebrew/bin:$PATH"
+  elif [ -x "/opt/homebrew/bin/brew" ]; then
+    # Default path for Intel
+    export PATH="/usr/local/bin:$PATH"
+  else
+    # Can't find brew anywhere reasonable - install it
+    install_homebrew
+  fi
+fi
+
+# Install packages via our Brewfile bundle
+install_bundle
+
+# Cleanup
+do_cleanup

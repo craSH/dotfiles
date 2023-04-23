@@ -1,0 +1,51 @@
+# Per zsh(1), this file is loaded for login shells
+{{ if eq .chezmoi.os "darwin" -}}
+# Homebrew (path, infopath, manpath)
+if [[ -x "/opt/homebrew/bin/brew" ]] ; then
+  brew="/opt/homebrew/bin/brew"
+elif [[ -x "/usr/local/bin/brew" ]] ; then
+  brew="/usr/local/bin/brew"
+fi
+if [[ -n "$brew" ]] ; then
+  eval "$($brew shellenv)"
+  export BREW_PREFIX="$(brew --prefix)"
+fi
+{{- end }}
+
+# PATH - items inserted in front later on will take precedence
+typeset -U path PATH
+
+[[ -x "${HOME}/go/bin" ]] && path=("${HOME}/go/bin" $path)
+[[ -x /opt/android-platform-tools ]] && path+=("/opt/android-platform-tools")
+[[ -r "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
+path=($HOME/.local/bin $path)
+
+export path PATH
+
+# FPATH
+typeset -U fpath FPATH
+
+{{ if eq .chezmoi.os "darwin" -}}
+fpath+=("${BREW_PREFIX}/share/zsh/functions")
+fpath+=("${BREW_PREFIX}/share/zsh/site-functions")
+{{- end }}
+
+{{- $functions := glob ".config/zsh/.zfunctions/*" }}
+{{ if $functions }}
+# Custom functions
+fpath+=($ZDOTDIR/.zfunctions)
+
+# Set all custom defined functions to autoload on first use (lazy load)
+autoload -Uz
+{{-   range $functions -}}
+{{ "" }} {{ . | splitList ".zfunctions/" | last }}
+{{-   end }}
+{{- end }}
+
+export fpath FPATH
+
+{{ $pyenvPath := lookPath "pyenv" -}}
+{{ if $pyenvPath -}}
+# pyenv
+eval "$(pyenv init - && pyenv init --path && pyenv virtualenv-init -)"
+{{ end -}}
