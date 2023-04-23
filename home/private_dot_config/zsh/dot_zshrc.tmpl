@@ -1,3 +1,4 @@
+# Per zsh(1), this file is loaded for interactive shells
 # This must be near the start of zsh configuration to provide complete profiling
 # https://blog.tarkalabs.com/optimize-zsh-fce424fcfd5
 if [[ "$ZPROF" = true ]]; then
@@ -40,11 +41,20 @@ bindkey -v
 
 bindkey "^R" history-incremental-pattern-search-backward
 
+{{ if eq .chezmoi.os "darwin" -}}
+# source antidote - https://getantidote.github.io/
+zstyle ':antidote:bundle' use-friendly-names 'yes'
+source ${BREW_PREFIX}/opt/antidote/share/antidote/antidote.zsh
+
+# initialize plugins statically with ${ZDOTDIR:-~}/.zsh_plugins.txt
+antidote load >/dev/null 2>&1
+{{- end }}
+
 # Start of Powerline10k config
 {{ if eq .chezmoi.os "linux" -}}
 source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 {{ else if eq .chezmoi.os "darwin" -}}
-source $(brew --prefix)/opt/powerlevel10k/powerlevel10k.zsh-theme
+source ${BREW_PREFIX}/opt/powerlevel10k/powerlevel10k.zsh-theme
 {{- end }}
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.

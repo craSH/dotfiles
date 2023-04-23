@@ -1,12 +1,14 @@
+# Per zsh(1), this file is loaded for login shells
 {{ if eq .chezmoi.os "darwin" -}}
 # Homebrew (path, infopath, manpath)
 if [[ -x "/opt/homebrew/bin/brew" ]] ; then
   brew="/opt/homebrew/bin/brew"
 elif [[ -x "/usr/local/bin/brew" ]] ; then
-  brew="/opt/homebrew/bin/brew"
+  brew="/usr/local/bin/brew"
 fi
 if [[ -n "$brew" ]] ; then
   eval "$($brew shellenv)"
+  export BREW_PREFIX="$(brew --prefix)"
 fi
 {{- end }}
 
@@ -24,8 +26,8 @@ export path PATH
 typeset -U fpath FPATH
 
 {{ if eq .chezmoi.os "darwin" -}}
-fpath+=("$(brew --prefix)/share/zsh/functions")
-fpath+=("$(brew --prefix)/share/zsh/site-functions")
+fpath+=("${BREW_PREFIX}/share/zsh/functions")
+fpath+=("${BREW_PREFIX}/share/zsh/site-functions")
 {{- end }}
 
 {{- $functions := glob ".config/zsh/.zfunctions/*" }}
