@@ -48,6 +48,12 @@ zstyle ':antidote:bundle' use-friendly-names 'yes'
 source ${BREW_PREFIX}/opt/antidote/share/antidote/antidote.zsh
 {{- end }}
 
+# zsh cache dir used by some plugins
+ZSH_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/oh-my-zsh"
+if [[ ! -d ${ZSH_CACHE_DIR}/completions ]]; then
+  mkdir -p ${ZSH_CACHE_DIR}/completions
+fi
+
 # initialize plugins statically with ${ZDOTDIR:-~}/.zsh_plugins.txt
 antidote load >/dev/null 2>&1
 
@@ -63,9 +69,6 @@ command -v op >/dev/null 2>&1 && eval "$(op completion zsh)" && compdef _op op
 
 # gopass completion
 command -v gopass >/dev/null 2>&1 && eval `gopass completion zsh`
-
-# github-cli completion
-command -v gh >/dev/null 2>&1 && eval `gh completion -s zsh`
 
 # chezmoi completion
 command -v chezmoi >/dev/null 2>&1 && eval `chezmoi completion zsh`
@@ -87,7 +90,7 @@ else
 fi
 {{- end }}
 
-# fzf integration
+# fzf zsh integration settings
 [[ -r ${HOME}/.config/fzf/fzf.zsh ]] && source ${HOME}/.config/fzf/fzf.zsh
 
 # Pet
