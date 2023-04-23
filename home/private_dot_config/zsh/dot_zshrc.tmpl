@@ -1,3 +1,9 @@
+# This must be near the start of zsh configuration to provide complete profiling
+# https://blog.tarkalabs.com/optimize-zsh-fce424fcfd5
+if [[ "$ZPROF" = true ]]; then
+  zmodload zsh/zprof
+fi
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -105,3 +111,8 @@ alias grep='grep --color=auto'
 alias files='fd -uu -g --type=file ""'
 alias terraforming='docker run --rm --name terraforming --volume=${HOME}/.aws:/root/.aws:ro quay.io/dtan4/terraforming:latest terraforming'
 alias shellcheck='docker run --rm --name shellcheck --volume=${PWD}:/mnt:ro koalaman/shellcheck:stable'
+
+# This must be near the end of zsh configuration to provide complete profiling
+if [[ "$ZPROF" = true ]]; then
+  zprof
+fi

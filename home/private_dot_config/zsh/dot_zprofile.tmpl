@@ -15,6 +15,7 @@ typeset -U path PATH
 
 [[ -x "${HOME}/go/bin" ]] && path=("${HOME}/go/bin" $path)
 [[ -x /opt/android-platform-tools ]] && path+=("/opt/android-platform-tools")
+[[ -r "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
 path=($HOME/.local/bin $path)
 
 export path PATH
@@ -27,8 +28,17 @@ fpath+=("$(brew --prefix)/share/zsh/functions")
 fpath+=("$(brew --prefix)/share/zsh/site-functions")
 {{- end }}
 
+{{- $functions := glob ".config/zsh/.zfunctions/*" }}
+{{ if $functions }}
 # Custom functions
 fpath+=($ZDOTDIR/.zfunctions)
+
+# Set all custom defined functions to autoload on first use (lazy load)
+autoload -Uz
+{{-   range $functions -}}
+{{ "" }} {{ . | splitList ".zfunctions/" | last }}
+{{-   end }}
+{{- end }}
 
 export fpath FPATH
 
