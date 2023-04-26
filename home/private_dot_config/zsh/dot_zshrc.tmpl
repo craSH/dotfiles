@@ -13,7 +13,6 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # The following lines were added by compinstall
-
 zstyle ':completion:*' completer _expand _complete _ignored _approximate
 zstyle ':completion:*' max-errors 1
 zstyle :compinstall filename "${ZDOTDIR}/.zshrc"
@@ -48,6 +47,9 @@ zstyle ':antidote:bundle' use-friendly-names 'yes'
 source ${BREW_PREFIX}/opt/antidote/share/antidote/antidote.zsh
 {{- end }}
 
+# evalcache cache dir
+ZSH_EVALCACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/evalcache"
+
 # zsh cache dir used by some plugins
 ZSH_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/oh-my-zsh"
 if [[ ! -d ${ZSH_CACHE_DIR}/completions ]]; then
@@ -64,17 +66,12 @@ antidote load >/dev/null 2>&1
 [[ -r ${HOME}/.env ]] && source ${HOME}/.env
 [[ -r ${HOME}/.env-secure ]] && source ${HOME}/.env-secure
 
-# 1Password completion
-command -v op >/dev/null 2>&1 && eval "$(op completion zsh)" && compdef _op op
+# 1password cli completion
+_evalcache op completion zsh && compdef _op op
 
-# gopass completion
-command -v gopass >/dev/null 2>&1 && eval `gopass completion zsh`
-
-# chezmoi completion
-command -v chezmoi >/dev/null 2>&1 && eval `chezmoi completion zsh`
-
-# twilio completion
-command -v twilio >/dev/null 2>&1 && eval `twilio autocomplete:script zsh`
+# twilio completion is extrememly slow, even cached - disable unless actively
+# using it
+#_evalcache twilio autocomplete:script zsh
 
 # GPG Agent (Also for ssh-agent provided by GPG)
 [[ -r ${HOME}/.gnupg/shell-config.sh ]] && source ${HOME}/.gnupg/shell-config.sh
