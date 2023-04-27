@@ -43,9 +43,3 @@ autoload -Uz
 {{- end }}
 
 export fpath FPATH
-
-{{ $pyenvPath := lookPath "pyenv" -}}
-{{ if $pyenvPath -}}
-# pyenv
-eval "$(pyenv init - && pyenv init --path && pyenv virtualenv-init -)"
-{{ end -}}
