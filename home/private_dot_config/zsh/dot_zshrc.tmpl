@@ -18,6 +18,8 @@ typeset -U fpath FPATH
 {{ if eq .chezmoi.os "darwin" -}}
 fpath+=("${BREW_PREFIX}/share/zsh/functions")
 fpath+=("${BREW_PREFIX}/share/zsh/site-functions")
+
+zstyle :omz:plugins:iterm2 shell-integration yes
 {{- end }}
 
 {{- $functions := glob ".config/zsh/.zfunctions/*" }}
@@ -114,12 +116,6 @@ fi
 
 # Pet
 [[ -r ${HOME}/.config/pet/pet.zsh ]] && source ${HOME}/.config/pet/pet.zsh
-
-{{ if eq .chezmoi.os "darwin" -}}
-# iTerm shell integration
-[[ -r ${HOME}/.iterm2_shell_integration.zsh ]] && source ${HOME}/.iterm2_shell_integration.zsh
-{{ "" }}
-{{ end -}}
 
 # Custom aliases
 {{- if lookPath "lsd" }}
