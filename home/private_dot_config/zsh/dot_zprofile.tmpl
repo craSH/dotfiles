@@ -21,25 +21,3 @@ typeset -U path PATH
 path=($HOME/.local/bin $path)
 
 export path PATH
-
-# FPATH
-typeset -U fpath FPATH
-
-{{ if eq .chezmoi.os "darwin" -}}
-fpath+=("${BREW_PREFIX}/share/zsh/functions")
-fpath+=("${BREW_PREFIX}/share/zsh/site-functions")
-{{- end }}
-
-{{- $functions := glob ".config/zsh/.zfunctions/*" }}
-{{ if $functions }}
-# Custom functions
-fpath+=($ZDOTDIR/.zfunctions)
-
-# Set all custom defined functions to autoload on first use (lazy load)
-autoload -Uz
-{{-   range $functions -}}
-{{ "" }} {{ . | splitList ".zfunctions/" | last }}
-{{-   end }}
-{{- end }}
-
-export fpath FPATH

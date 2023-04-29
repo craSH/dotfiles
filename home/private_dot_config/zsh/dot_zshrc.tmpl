@@ -12,6 +12,28 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# FPATH
+typeset -U fpath FPATH
+
+{{ if eq .chezmoi.os "darwin" -}}
+fpath+=("${BREW_PREFIX}/share/zsh/functions")
+fpath+=("${BREW_PREFIX}/share/zsh/site-functions")
+{{- end }}
+
+{{- $functions := glob ".config/zsh/.zfunctions/*" }}
+{{ if $functions }}
+# Custom functions
+fpath+=($ZDOTDIR/.zfunctions)
+
+# Set all custom defined functions to autoload on first use (lazy load)
+autoload -Uz
+{{-   range $functions -}}
+{{ "" }} {{ . | splitList ".zfunctions/" | last }}
+{{-   end }}
+{{- end }}
+
+export fpath FPATH
+
 # The following lines were added by compinstall
 zstyle ':completion:*' completer _expand _complete _ignored _approximate
 zstyle ':completion:*' max-errors 1
