@@ -4,7 +4,6 @@ Library/
 {{ end }}
 
 {{ if ne .chezmoi.os "linux" }}
-.hushlogin
 .local/share/applications/
 .local/share/fonts
 {{ end }}
@@ -20,6 +19,7 @@ Library/
 {{ if ne .chezmoi.os "windows" }}
 .chezmoiscripts/windows/**
 {{ else }}
+.hushlogin
 .config
 .env
 .gnupg
