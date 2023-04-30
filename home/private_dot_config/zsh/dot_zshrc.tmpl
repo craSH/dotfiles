@@ -73,8 +73,8 @@ if [[ ! -d ${ZSH_CACHE_DIR}/completions ]]; then
   mkdir -p ${ZSH_CACHE_DIR}/completions
 fi
 
-# zsh-syntax-highlighting configuration
-ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
+# zsh-lsd: Automatic directory lsting on cd
+export AUTOCD=1
 
 # source antidote - https://getantidote.github.io/
 zstyle ':antidote:bundle' use-friendly-names 'yes'
@@ -121,13 +121,6 @@ fi
 [[ -r ${HOME}/.config/pet/pet.zsh ]] && source ${HOME}/.config/pet/pet.zsh
 
 # Custom aliases
-{{- if lookPath "lsd" }}
-alias ls='lsd'
-{{- else if eq .chezmoi.os "linux" }}
-alias ls='ls --color=auto'
-{{ else if eq .chezmoi.os "darwin" }}
-alias ls='ls -GFh'
-{{- end }}
 alias grep='grep --color=auto'
 alias files='fd -uu -g --type=file ""'
 alias terraforming='docker run --rm --name terraforming --volume=${HOME}/.aws:/root/.aws:ro quay.io/dtan4/terraforming:latest terraforming'

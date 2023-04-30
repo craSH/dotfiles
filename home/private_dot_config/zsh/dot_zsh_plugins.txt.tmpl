@@ -2,28 +2,51 @@
 ohmyzsh/ohmyzsh       path:lib
 
 # oh my zsh: select plugins
+{{- if lookPath "fd" }}
 ohmyzsh/ohmyzsh       path:plugins/fd       kind:fpath
+{{- end }}
+{{- if lookPath "fzf" }}
 ohmyzsh/ohmyzsh       path:plugins/fzf
+{{- end }}
+{{- if lookPath "gh" }}
 ohmyzsh/ohmyzsh       path:plugins/gh
+{{- end }}
 ohmyzsh/ohmyzsh       path:plugins/pyenv
+{{- if lookPath "rg" }}
 ohmyzsh/ohmyzsh       path:plugins/ripgrep  kind:fpath
+{{- end }}
 ohmyzsh/ohmyzsh       path:plugins/vi-mode
 {{ if eq .chezmoi.os "darwin" -}}
 ohmyzsh/ohmyzsh       path:plugins/iterm2
 {{- end }}
+{{- if lookPath "zoxide" }}
 ohmyzsh/ohmyzsh       path:plugins/zoxide
+{{- end }}
 
+{{ if lookPath "jq" -}}
 # alt+j / jq REPL (Forked from: https://github.com/reegnz/jq-zsh-plugin)
 craSH/zsh_jq-zsh-plugin
+{{- end }}
 
 # _evalcache (Forked from: https://github.com/mroth/evalcache)
 craSH/zsh_evalcache
 
+# bd command - cd to specific parent directory (Forked from: https://github.com/Tarrasch/zsh-bd/fork)
+craSH/zsh_zsh-bd
+
+# unified pbcopy/pbpaste/clip/open commands across operating systems (Forked from: https://github.com/zpm-zsh/clipboard)
+craSH/zsh_clipboard
+
+{{ if lookPath "lsd" -}}
+# lsd aliases and helpers (Forked from: https://github.com/z-shell/zsh-lsd)
+craSH/zsh_zsh-lsd
+{{- end }}
+
 # Fish-like autosuggestions (Forked from: https://github.com/zsh-users/zsh-autosuggestions)
 craSH/zsh_zsh-autosuggestions
 
-# Fish-like syntax highlighting (Forked from: https://github.com/zsh-users/zsh-syntax-highlighting)
-craSH/zsh_zsh-syntax-highlighting
+# *fast* Fish-like syntax highlighting (Forked from: https://github.com/zdharma-continuum/fast-syntax-highlighting/)
+craSH/zsh_fast-syntax-highlighting
 
 # Prompt theme (Forked from: https://github.com/romkatv/powerlevel10k)
 craSH/zsh_powerlevel10k
