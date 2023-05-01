@@ -133,8 +133,6 @@ setopt no_nomatch  # Allow use of asterisk in commandlines without quoting, e.g.
 unsetopt autocd beep
 bindkey -v
 
-bindkey "^R" history-incremental-pattern-search-backward
-
 # This must be near the end of zsh configuration to provide complete profiling
 if [[ "$ZPROF" = true ]]; then
   zprof
