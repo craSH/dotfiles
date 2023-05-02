@@ -115,6 +115,10 @@ alias shellcheck='docker run --rm --name shellcheck --volume=${PWD}:/mnt:ro koal
 # Configure most settings after plugin initialization to override opinionated plugins
 #
 
+# Stop ZLE from eating trailing spaces and slashes in certain completions
+# https://superuser.com/posts/613685/revisions
+export ZLE_REMOVE_SUFFIX_CHARS=$' \t\n;&'
+
 # the detailed meaning of the below three variable can be found in `man zshparam`.
 export HISTFILE=~/.histfile
 export HISTSIZE=1000000   # the number of items for the internal history list
