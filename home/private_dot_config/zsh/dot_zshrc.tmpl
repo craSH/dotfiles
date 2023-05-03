@@ -121,21 +121,37 @@ export ZLE_REMOVE_SUFFIX_CHARS=$' \t\n;&'
 
 # the detailed meaning of the below three variable can be found in `man zshparam`.
 export HISTFILE=~/.histfile
-export HISTSIZE=1000000   # the number of items for the internal history list
-export SAVEHIST=1000000   # maximum number of items for the history file
+export HISTSIZE=1000000      # the number of items for the internal history list
+export SAVEHIST=1000000      # maximum number of items for the history file
 
 # The meaning of these options can be found in man page of `zshoptions`.
 setopt hist_ignore_all_dups  # do not put duplicated command into history list
-setopt hist_save_no_dups  # do not save duplicated command
-setopt hist_reduce_blanks  # remove unnecessary blanks
-setopt no_hist_verify  # automatically execute commands with history expansion (!$, etc.)
-setopt inc_append_history_time  # append command to history file immediately after execution
-setopt extended_history  # record command start time
-setopt interactivecomments  # Allow interactive shells to treat '#' as a comment
-setopt no_nomatch  # Allow use of asterisk in commandlines without quoting, e.g. for grep/rg/fd
+setopt hist_save_no_dups     # do not save duplicated command
+setopt hist_reduce_blanks    # remove unnecessary blanks
+setopt no_hist_verify        # automatically execute commands with history expansion (!$, etc.)
+setopt interactivecomments   # Allow interactive shells to treat '#' as a comment
+setopt no_nomatch            # Allow use of asterisk in commandlines w/o quoting, e.g. for grep/rg/fd
 
 unsetopt autocd beep
 bindkey -v
+
+# https://superuser.com/a/691603
+# Relies on share_history which is set by omz/lib/history
+bindkey "OA" up-line-or-local-history
+bindkey "OB" down-line-or-local-history
+
+up-line-or-local-history() {
+    zle set-local-history 1
+    zle up-line-or-history
+    zle set-local-history 0
+}
+zle -N up-line-or-local-history
+down-line-or-local-history() {
+    zle set-local-history 1
+    zle down-line-or-history
+    zle set-local-history 0
+}
+zle -N down-line-or-local-history
 
 # This must be near the end of zsh configuration to provide complete profiling
 if [[ "$ZPROF" = true ]]; then
