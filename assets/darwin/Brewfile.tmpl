@@ -22,6 +22,7 @@ cask_args appdir: "~/Applications", require_sha: true
 # Formulae (brew install)
 {{ if .context.machine.personal -}}
 brew "mistertea/et/et"
+brew "twilio/brew/twilio"
 {{ end -}}
 brew "age"
 brew "antidote"
@@ -72,7 +73,6 @@ brew "speedtest-cli"
 brew "terraform"
 brew "tflint"
 brew "tmux"
-brew "twilio/brew/twilio"
 brew "vim"
 brew "virtualenv"
 brew "watch"
