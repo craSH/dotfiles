@@ -48,5 +48,9 @@ craSH/zsh_zsh-autosuggestions
 # *fast* Fish-like syntax highlighting (Forked from: https://github.com/zdharma-continuum/fast-syntax-highlighting/)
 craSH/zsh_fast-syntax-highlighting
 
+{{ if .context.machine.work_managed -}}
+{{ joinPath .chezmoi.sourceDir "private_dot_config/zsh/encrypted_empty_dot_zsh_plugins_work_managed.txt.tmpl.asc" | include | decrypt }}
+{{ end -}}
+
 # Prompt theme (Forked from: https://github.com/romkatv/powerlevel10k)
 craSH/zsh_powerlevel10k
