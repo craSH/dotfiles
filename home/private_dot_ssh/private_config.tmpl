@@ -18,3 +18,6 @@ Include config-*-work-*
 Include config-*-personal*
 {{- end }}
 Include config-9*
+{{ if lookPath "colima" -}}
+Include {{ .chezmoi.homeDir }}/.colima/ssh_config
+{{- end }}
