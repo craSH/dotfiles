@@ -1,6 +1,7 @@
 {{- /* vim set filetype=sh.chezmoitmpl: */ -}}
 {{- if lookPath "vim" -}}
 #!/bin/bash
+# SHA256 of ~/.vimrc plugin list: {{ output "sh" "-c" "grep '^Plugin' ${HOME}/.vimrc | shasum -a 256" }}
 echo -n "Installing Vim Plugins via Vundle..."
 if ! (echo | vim +PluginInstall +qall &>/dev/null); then
   echo " Failed!" >&2
