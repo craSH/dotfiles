@@ -14,6 +14,14 @@ filetype off                  " required for plugin to handle filetype detection
 set modeline                  " https://vim.fandom.com/wiki/Modeline_magic
 set modelines=5
 
+" Store all swap files in a dedicated directory, with collision-free names
+" https://vi.stackexchange.com/posts/16047/revisions
+set directory^=$HOME/.vim/swap//
+
+" Store all undo history in a dedicated directory, and enable the feature
+set undodir^=~/.vim/undodir//
+set undofile
+
 " Fix up encoding on wonky systems
 set encoding=utf-8
 scriptencoding utf-8
