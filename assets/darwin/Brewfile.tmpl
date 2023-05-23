@@ -21,6 +21,8 @@ cask_args appdir: "~/Applications", require_sha: true
 
 # Formulae (brew install)
 {{ if .context.machine.personal -}}
+brew "colima" # Docker/container runtime
+brew "docker" # Docker Engine - Community
 brew "mistertea/et/et"
 brew "twilio/brew/twilio"
 {{ end -}}
@@ -29,9 +31,7 @@ brew "antidote"
 brew "bat"
 brew "bat-extras"
 brew "chezmoi"
-brew "colima"
 brew "croc"
-brew "docker"
 brew "exiftool"
 brew "fd"
 brew "ffmpeg"
@@ -101,6 +101,9 @@ cask "tailscale"
 cask "todoist"
 cask "vlc"
 cask "zerotier-one"
+{{ end -}}
+{{ if .context.machine.work_managed -}}
+cask "docker" # Docker desktop
 {{ end -}}
 cask "1password", args: { appdir: "/Applications" }
 cask "1password-cli"
