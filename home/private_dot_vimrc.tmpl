@@ -132,10 +132,11 @@ set scrolloff=3
 let g:smoothie_speed_constant_factor=30
 let g:smoothie_speed_linear_factor=30
 
-" Show line numbers as absolute in file
-"set number
 " Show line numbers as relative to current cursor position
 set relativenumber
+" Show line numbers as absolute in file - when combined with relativenumber,
+" the curernt line will show the absolute number and others will be relative
+set number
 
 "
 " Color scheme settings
