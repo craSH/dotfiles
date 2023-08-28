@@ -107,9 +107,18 @@ fi
 
 # Custom aliases
 alias grep='grep --color=auto'
+{{- if lookPath "fd" }}
 alias files='fd -uu -g --type=file ""'
+{{- end }}
+{{- if and (eq .chezmoi.os "darwin") (stat  "/Applications/Tailscale.app/Contents/MacOS/Tailscale") }}
+alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
+{{- end }}
+{{- if lookPath "docker" }}
+
+# Aliases that run tools via ephemeral docker containers
 alias terraforming='docker run --rm --name terraforming --volume=${HOME}/.aws:/root/.aws:ro quay.io/dtan4/terraforming:latest terraforming'
 alias shellcheck='docker run --rm --name shellcheck --volume=${PWD}:/mnt:ro koalaman/shellcheck:stable'
+{{- end }}
 
 #
 # Configure most settings after plugin initialization to override opinionated plugins
