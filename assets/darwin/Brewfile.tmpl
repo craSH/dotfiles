@@ -92,7 +92,6 @@ brew "knqyf263/pet/pet"
 
 # Casks (brew install --cask)
 {{ if .context.machine.personal -}}
-cask "backblaze", args: { require_sha: false }
 cask "balenaetcher"
 cask "calibre"
 cask "cryptomator"
@@ -101,7 +100,7 @@ cask "handbrake"
 cask "nheko"
 cask "plex"
 cask "signal"
-cask "tailscale"
+cask "tailscale", args: { appdir: "/Applications" }
 cask "todoist"
 cask "vlc"
 cask "zerotier-one"
