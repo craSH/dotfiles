@@ -62,6 +62,7 @@ fi
 export AUTOCD=1
 
 # source antidote - https://getantidote.github.io/
+export ANTIDOTE_HOME=~/.cache/antidote
 zstyle ':antidote:bundle' use-friendly-names 'yes'
 {{/* TODO: antidote for other operating systems */}}
 {{ if eq .chezmoi.os "darwin" -}}
