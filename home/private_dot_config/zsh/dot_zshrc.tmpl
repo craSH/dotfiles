@@ -115,6 +115,12 @@ alias files='fd -uu -g --type=file ""'
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 {{- end }}
 {{- if lookPath "docker" }}
+{{- if and (.context.machine.work_managed) }}
+[[ -r ${ZDOTDIR}/.zshrc_work_managed ]] && source ${ZDOTDIR}/.zshrc_work_managed
+{{- end }}
+{{- if and (.context.machine.work_oob) }}
+[[ -r ${ZDOTDIR}/.zshrc_work_oob ]] && source ${ZDOTDIR}/.zshrc_work_oob
+{{- end }}
 
 # Aliases that run tools via ephemeral docker containers
 alias terraforming='docker run --rm --name terraforming --volume=${HOME}/.aws:/root/.aws:ro quay.io/dtan4/terraforming:latest terraforming'
