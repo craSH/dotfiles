@@ -21,8 +21,6 @@ cask_args appdir: "~/Applications", require_sha: true
 
 # Formulae (brew install)
 {{ if .context.machine.personal -}}
-brew "colima" # Docker/container runtime
-brew "docker" # Docker Engine - Community
 brew "mistertea/et/et"
 brew "twilio/brew/twilio"
 {{ end -}}
@@ -105,13 +103,13 @@ cask "vlc"
 cask "zerotier-one"
 {{ end -}}
 {{ if .context.machine.work_managed -}}
-cask "docker" # Docker desktop
 {{ end -}}
 cask "1password", args: { appdir: "/Applications" }
 cask "1password-cli", args: { appdir: "/Applications" }
 cask "alfred", args: { appdir: "/Applications" }
 cask "burp-suite-professional"
 cask "clocker", args: { appdir: "/Applications" }
+cask "docker" # Docker desktop
 cask "firefox"
 cask "github"
 cask "google-chrome", args: { require_sha: false }
