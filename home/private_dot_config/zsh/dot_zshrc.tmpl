@@ -108,10 +108,6 @@ fi
 
 # Custom aliases
 alias grep='grep --color=auto'
-{{- if lookPath "zoxide" }}
-alias cd='__zoxide_z'
-alias cdi='__zoxide_zi'
-{{- end }}
 {{- if lookPath "fd" }}
 alias files='fd -uu -g --type=file ""'
 {{- end }}
