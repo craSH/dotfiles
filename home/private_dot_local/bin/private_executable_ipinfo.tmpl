@@ -3,11 +3,22 @@ export IPINFO_ACCESS_TOKEN={{ gopass "_dotfiles/ipinfo/access_token" | quote }}
 
 # Convert script arguments to array
 args=( "$@" )
-ip_addr="${args[0]:-}" # If no argument provided, empty string - ipinfo.io will return info for this client's IP
+ip_addr="${args[0]:-}" # If no argument provided, empty string - return info for this client's IP
 trailing_args=${args[@]:1}
+# If no trailing (2nd onward) arguemnts provided, set to "." for the jq identity operator
+jq_filter="${trailing_args:-.}"
 
+#echo "-- virustotal.com query:"
+vt --format json ip "${ip_addr}" --exclude last_analysis_results last_analysis_date \
+  | jq '{"virustotal.com": .[]}' \
+  | jq "${jq_filter}" \
+  | ([[ -n "$JSON" ]] && jq . || yq -P ) # if JSON is set and non-zero, pretty print as JSON. Otherwise, pretty print YAML.
+
+#echo "-- ipinfo.io query:"
 curl -s \
   -H "Authorization: Bearer ${IPINFO_ACCESS_TOKEN}" \
   -H "Accept: application/json" \
   "https://ipinfo.io/${ip_addr}/json" \
-  | jq ${trailing_args:-.} # If no trailing (2nd onward) arguemnts provided, set to "." for the jq identity operator
+  | jq '{"ipinfo.io": .}' \
+  | jq "${jq_filter}" \
+  | ([[ -n "$JSON" ]] && jq . || yq -P ) # if JSON is set and non-zero, pretty print as JSON. Otherwise, pretty print YAML.
