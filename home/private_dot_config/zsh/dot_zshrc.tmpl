@@ -106,6 +106,13 @@ fi
 # Pet
 [[ -r ${HOME}/.config/pet/pet.zsh ]] && source ${HOME}/.config/pet/pet.zsh
 
+{{- if and (eq .chezmoi.os "darwin") (stat  "/opt/homebrew/opt/nvm/nvm.sh") }}
+# nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+{{- end }}
+
 # Custom aliases
 alias grep='grep --color=auto'
 {{- if lookPath "fd" }}
@@ -173,3 +180,6 @@ zle -N down-line-or-local-history
 if [[ "$ZPROF" = true ]]; then
   zprof
 fi
+
+# iTerm Integration
+test -e "${ZDOTDIR}/.iterm2_shell_integration.zsh" && source "${ZDOTDIR}/.iterm2_shell_integration.zsh"
