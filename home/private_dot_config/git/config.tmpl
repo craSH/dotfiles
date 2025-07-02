@@ -10,8 +10,25 @@
         {{- else -}}
         name = "{{ .identity.work.name }}"
         email = "{{ .identity.work.email }}"
-        signingkey = "{{ .identity.work.gpg_fingerprint }}"
+        # YubiKey based GPG Signing key
+        # signingkey = "{{ .identity.work.gpg_fingerprint }}"
+        # Alternate SSH Signing key
+        signingkey = "{{ .identity.work.ssh_pubkey_alt }}"
         {{- end }}
+
+{{ if .context.machine.personal -}}
+{{- else -}}
+[gpg]
+        # 1Password based SSH Signing key
+        format = ssh
+{{- end }}
+
+{{ if .context.machine.personal -}}
+{{- else -}}
+[gpg "ssh"]
+        # 1Password based SSH Signing
+        program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+{{- end }}
 
 [commit]
         gpgsign = true

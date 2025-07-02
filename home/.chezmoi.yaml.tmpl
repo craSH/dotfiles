@@ -12,6 +12,7 @@
 {{- $email_work := promptStringOnce . "identity.work.email" "Email (work)" -}}
 {{- $username_work := promptStringOnce . "identity.work.username" "Username (work)" -}}
 {{- $gpg_fingerprint_work := promptStringOnce . "identity.work.gpg_fingerprint" "GPG Fingerprint for chezmoi to encrypt to (work)" -}}
+{{- $ssh_pubkey_alt_work := promptStringOnce . "identity.work.ssh_pubkey_alt" "SSH Public key (alternative, work)" -}}
 
 {{- $personal := promptBoolOnce . "context.machine.personal" "Is this a personal machine" true -}}{{/* true if this machine should have personal secrets */}}
 {{- $work_managed := promptBoolOnce . "context.machine.work_managed" "Is this a work (managed) machine" false -}}{{/* true if this machine should have work (managed) secrets */}}
@@ -43,6 +44,7 @@ data:
       email: {{ $email_work }}
       username: {{ $username_work }}
       gpg_fingerprint: {{ $gpg_fingerprint_work }}
+      ssh_pubkey_alt: {{ $ssh_pubkey_alt_work }}
   context:
     machine:
       personal: {{ $personal }}
