@@ -106,6 +106,11 @@ fi
 # Pet
 [[ -r ${HOME}/.config/pet/pet.zsh ]] && source ${HOME}/.config/pet/pet.zsh
 
+{{- if lookPath "fnm" }}
+# fnm
+eval "$(fnm env --use-on-cd --shell zsh)"
+{{- end }}
+
 {{- if and (eq .chezmoi.os "darwin") (stat  "/opt/homebrew/opt/nvm/nvm.sh") }}
 # nvm
 export NVM_DIR="$HOME/.nvm"
@@ -132,6 +137,8 @@ alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 # Aliases that run tools via ephemeral docker containers
 alias terraforming='docker run --rm --name terraforming --volume=${HOME}/.aws:/root/.aws:ro quay.io/dtan4/terraforming:latest terraforming'
 alias shellcheck='docker run --rm --name shellcheck --volume=${PWD}:/mnt:ro koalaman/shellcheck:stable'
+alias zizmor='docker run --rm -it -e GH_TOKEN=$(gh auth token) ghcr.io/zizmorcore/zizmor:latest'
+alias poutine='docker run --rm -it -e GH_TOKEN=$(gh auth token) ghcr.io/boostsecurityio/poutine:latest'
 {{- end }}
 
 #
