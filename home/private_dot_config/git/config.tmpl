@@ -101,3 +101,7 @@
 [credential "https://gist.github.com"]
 	helper = !{{ $ghPath }} auth git-credential
 {{- end }}
+[credential]
+	helper = cache --timeout 21600
+[credential {{ gopass "_dotfiles/git-server/personal/url" | quote }}]
+	helper = oauth
