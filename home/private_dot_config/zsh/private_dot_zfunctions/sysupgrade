@@ -1,0 +1,7 @@
+# sysupgrade - System-wide package upgrade runner
+# Upgrades Homebrew formulae, casks, and global npm packages in sequence.
+sysupgrade() {
+  npm upgrade -g --ignore-scripts --min-release-age=7 --verbose
+  brew upgrade --greedy --no-quit
+  brew cleanup
+}
