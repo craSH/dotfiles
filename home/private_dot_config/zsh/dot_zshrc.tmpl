@@ -139,6 +139,7 @@ alias terraforming='docker run --rm --name terraforming --volume=${HOME}/.aws:/r
 alias shellcheck='docker run --rm --name shellcheck --volume=${PWD}:/mnt:ro koalaman/shellcheck:stable'
 alias zizmor='docker run --rm -it -e GH_TOKEN=$(gh auth token) ghcr.io/zizmorcore/zizmor:latest'
 alias poutine='docker run --rm -it -e GH_TOKEN=$(gh auth token) ghcr.io/boostsecurityio/poutine:latest'
+alias docker-vm-shell='docker run -it --privileged --pid=host --rm -v /:/host dhi.io/debian-base:trixie-dev nsenter -t 1 -m -u -n -i bash -ls'
 {{- end }}
 
 #
