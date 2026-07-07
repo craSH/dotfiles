@@ -56,7 +56,7 @@
     pyenv                   # python environment (https://github.com/pyenv/pyenv)
     # goenv                 # go environment (https://github.com/syndbg/goenv)
     # nodenv                # node.js version from nodenv (https://github.com/nodenv/nodenv)
-    nvm                     # node.js version from nvm (https://github.com/nvm-sh/nvm)
+    # nvm                   # disabled — replaced dynamically below by fnm if available
     # nodeenv               # node.js environment (https://github.com/ekalinin/nodeenv)
     # node_version          # node.js version
     # go_version            # go version (https://golang.org)
@@ -987,12 +987,6 @@
   # Custom icon.
   # typeset -g POWERLEVEL9K_NODENV_VISUAL_IDENTIFIER_EXPANSION='⭐'
 
-  ##############[ nvm: node.js version from nvm (https://github.com/nvm-sh/nvm) ]###############
-  # Nvm color.
-  typeset -g POWERLEVEL9K_NVM_FOREGROUND=70
-  # Custom icon.
-  # typeset -g POWERLEVEL9K_NVM_VISUAL_IDENTIFIER_EXPANSION='⭐'
-
   ############[ nodeenv: node.js environment (https://github.com/ekalinin/nodeenv) ]############
   # Nodeenv color.
   typeset -g POWERLEVEL9K_NODEENV_FOREGROUND=70
@@ -1617,6 +1611,12 @@
   # can slow down prompt by 1-2 milliseconds, so it's better to keep it turned off unless you
   # really need it.
   typeset -g POWERLEVEL9K_DISABLE_HOT_RELOAD=true
+
+  # Node-version segment: prefer fnm if installed, fall back to nvm.
+  if (( $+commands[fnm] )); then
+    POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS[${POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS[(i)nvm]}]=fnm
+    typeset -g POWERLEVEL9K_FNM_FOREGROUND=70
+  fi
 
   # If p10k is already loaded, reload configuration.
   # This works even with POWERLEVEL9K_DISABLE_HOT_RELOAD=true.
