@@ -28,10 +28,7 @@ zstyle :omz:plugins:iterm2 shell-integration yes
 fpath+=($ZDOTDIR/.zfunctions)
 
 # Set all custom defined functions to autoload on first use (lazy load)
-autoload -Uz
-{{-   range $functions -}}
-{{ "" }} {{ . | splitList ".zfunctions/" | last }}
-{{-   end }}
+autoload -Uz $ZDOTDIR/.zfunctions/*(N-.:t)
 {{- end }}
 
 export fpath FPATH
