@@ -20,6 +20,8 @@ cask_args appdir: "~/Applications", require_sha: true
 
 # Formulae (brew install)
 {{ if .context.machine.personal -}}
+brew "podman"
+brew "podman-compose"
 brew "mistertea/et/et"
 {{ end -}}
 brew "age"
@@ -107,7 +109,6 @@ cask "alfred", args: { appdir: "/Applications" }
 cask "boop" # https://boop.okat.best/
 cask "burp-suite-professional"
 cask "clocker", args: { appdir: "/Applications" }
-cask "docker" # Docker desktop
 cask "firefox"
 cask "github"
 cask "google-chrome", args: { require_sha: false }

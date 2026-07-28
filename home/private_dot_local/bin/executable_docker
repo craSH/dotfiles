@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Little wrapper to use podman in place of docker
+set -euo pipefail
+
+if ! PODMAN_BIN=$(command -v podman); then
+  echo 'podman not installed, unable to continue'
+  exit 1
+fi
+
+$PODMAN_BIN "$@"
