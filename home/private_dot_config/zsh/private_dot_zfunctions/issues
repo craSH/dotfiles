@@ -1,0 +1,55 @@
+# tickets — brief report of all locally managed tickets/specs (.scratch/ tracker)
+# and their Status. Walks up from $PWD, so it works even when CWD is nested
+# (e.g. under src/). Colour when writing to a terminal.
+#
+# This is designed to work with locally tracked issued created with skills from
+# https://github.com/mattpocock/skills, but it can work with any similarly
+# structured system.
+
+tickets() {
+  emulate -L zsh
+  setopt local_options null_glob extended_glob numeric_glob_sort
+
+  # Nearest ancestor holding a .scratch/ dir = the project root.
+  local root=$PWD
+  while [[ $root != / && ! -d $root/.scratch ]]; do
+    root=${root:h}
+  done
+  if [[ ! -d $root/.scratch ]]; then
+    print -ru2 -- "tickets: no .scratch/ tracker found at or above $PWD"
+    return 1
+  fi
+
+  local reset='' ; local -A col
+  if [[ -t 1 ]]; then
+    reset=$'\e[0m'
+    col=(
+      done            $'\e[32m'   ready-for-agent $'\e[36m'
+      ready-for-human $'\e[36m'   needs-triage    $'\e[33m'
+      needs-info      $'\e[33m'   wontfix         $'\e[90m'
+    )
+  fi
+
+  print -r -- "Locally managed tickets — ${root:t}/.scratch"
+  print -r -- ""
+
+  local f line st rel n=0
+  local -A tally
+  for f in $root/.scratch/**/*.md(.); do
+    line=$(grep -m1 -iE '^[*[:space:]]*Status:' -- "$f") || continue  # skip non-tickets
+    st=${line##*[Ss]tatus:}                        # drop up to 'Status:'
+    st=${st//\*/}                                  # drop markdown asterisks
+    st=${${st##[[:space:]]#}%%[[:space:]]#}        # trim both ends
+    [[ -z $st ]] && st='(none)'
+    rel=${f#$root/}
+    (( n++ )) ; (( tally[$st]++ ))
+    printf '  %s%-16s%s %s\n' "${col[$st]:-}" "$st" "$reset" "$rel"
+  done
+
+  (( n == 0 )) && { print -r -- "  (no tickets with a Status: line found)"; return 0; }
+
+  local -a parts
+  for st in ${(ok)tally}; do parts+=( "$st: ${tally[$st]}" ); done
+  print -r -- ""
+  print -r -- "  ${(j:, :)parts}  ($n total)"
+}
