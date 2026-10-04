@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# sysupgrade - System-wide package upgrade runner
+# Upgrades Homebrew formulae, casks, and global npm packages in sequence.
+command -v mise && \
+  mise upgrade
+command -v npm && \
+  npm upgrade -g --ignore-scripts --min-release-age=7 --verbose
+command -v brew && \
+  brew upgrade --greedy --no-quit ; \
+  brew cleanup
+command -v mas && \
+  echo "Upgrading Mac App Store apps, sudo password will be required." && \
+  mas update

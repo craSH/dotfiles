@@ -76,12 +76,20 @@ antidote load >/dev/null 2>&1
 [[ -r ${HOME}/.env ]] && source ${HOME}/.env
 [[ -r ${HOME}/.env-secure ]] && source ${HOME}/.env-secure
 
+{{- if lookPath "op" }}
 # 1password cli completion
 _evalcache op completion zsh && compdef _op op
+{{- end }}
 
 # twilio completion is extrememly slow, even cached - disable unless actively
 # using it
 #_evalcache twilio autocomplete:script zsh
+
+{{- if lookPath "mise" }}
+# mise
+_evalcache mise activate zsh
+{{- end }}
+
 
 # GPG Agent (Also for ssh-agent provided by GPG)
 [[ -r ${HOME}/.gnupg/shell-config.sh ]] && source ${HOME}/.gnupg/shell-config.sh
@@ -105,7 +113,7 @@ fi
 
 {{- if lookPath "fnm" }}
 # fnm
-eval "$(fnm env --use-on-cd --shell zsh)"
+_evalcache fnm env --use-on-cd --shell zsh
 {{- end }}
 
 {{- if and (eq .chezmoi.os "darwin") (stat  "/opt/homebrew/opt/nvm/nvm.sh") }}
