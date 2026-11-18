@@ -116,6 +116,11 @@ fi
 _evalcache fnm env --use-on-cd --shell zsh
 {{- end }}
 
+{{- if lookPath "mise" }}
+# mise
+[[ -n ${NO_MISE-} ]] || eval "$(mise activate zsh)"
+{{- end }}
+
 {{- if and (eq .chezmoi.os "darwin") (stat  "/opt/homebrew/opt/nvm/nvm.sh") }}
 # nvm
 export NVM_DIR="$HOME/.nvm"
